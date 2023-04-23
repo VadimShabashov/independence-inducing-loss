@@ -1,0 +1,4 @@
+Using device='cpu'
+
+Model with configuration:dataset=CIFAR10, model=ResNet18, embedding dim=1024,ind. loss=None, reg. loss=None,class. loss=True, batch=5/5,margin=0.5, num_epochs_in_step=1,num_epoch_steps=1
+loss = 2.86, ranking_loss = 0.57, regularization_loss = 0.00, independence_loss = 0.00, classification_loss = 2.29, accuracy = 0.16
