@@ -5,7 +5,7 @@ from datasets.dataset_utils import get_path_to_data_dir
 from datasets.dataloaders_provider import DataloadersProvider
 
 
-class GoogleLandmark(DataloadersProvider):
+class GoogleLandmarks(DataloadersProvider):
     def __init__(self, num_train_classes, num_class_samples):
         # Path to dataset
         dataset_dir = os.path.join(get_path_to_data_dir(), 'google_landmarks')

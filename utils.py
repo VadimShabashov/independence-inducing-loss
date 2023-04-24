@@ -1,6 +1,6 @@
 from datasets.cifar10 import CIFAR10
 from datasets.oxford5k import Oxford5k
-from datasets.google_landmarks import GoogleLandmark
+from datasets.google_landmarks import GoogleLandmarks
 from losses.zero_loss import ZeroLoss
 from losses.independence import NegApproxLoss1, NegApproxLoss2, KurtosisLoss, CorrMatLoss
 from losses.regularization import L1
@@ -11,8 +11,8 @@ def get_dataset(dataset_name, num_train_classes, num_class_samples):
         return CIFAR10(num_train_classes, num_class_samples)
     elif dataset_name == 'Oxford5k':
         return Oxford5k(num_train_classes, num_class_samples)
-    elif dataset_name == 'GoogleLandmark':
-        return GoogleLandmark(num_train_classes, num_class_samples)
+    elif dataset_name == 'GoogleLandmarks':
+        return GoogleLandmarks(num_train_classes, num_class_samples)
     else:
         raise Exception(f"Unknown dataset {dataset_name}")
 
