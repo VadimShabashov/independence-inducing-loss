@@ -13,6 +13,7 @@ class TripletBatchSampler:
         self.labels = labels
         self.num_classes = num_classes
         self.num_samples = num_samples
+        self.batch_size = num_classes * num_samples
 
         # Create dict: label=[indices with such label]
         self.label_to_indices = defaultdict(list)
