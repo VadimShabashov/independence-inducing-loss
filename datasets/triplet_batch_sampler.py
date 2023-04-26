@@ -1,9 +1,8 @@
 import random
 from collections import defaultdict
-from torch.utils.data import BatchSampler
 
 
-class TripletBatchSampler(BatchSampler):
+class TripletBatchSampler:
     """
     Batch sampler, that randomly selects num_classes, then randomly select min(num_samples, size of class) from them.
     The idea of such sampling technique: https://arxiv.org/pdf/1703.07737.pdf
