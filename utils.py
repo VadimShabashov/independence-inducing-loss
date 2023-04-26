@@ -29,7 +29,7 @@ def get_independence_loss(independence_loss, device):
     elif independence_loss == 'CorrMatLoss':
         return CorrMatLoss(device)
     else:
-        raise f"Unknown regularization loss {independence_loss}"
+        raise Exception(f"Unknown regularization loss {independence_loss}")
 
 
 def get_regularization_loss(regularization_loss, device):
@@ -38,4 +38,4 @@ def get_regularization_loss(regularization_loss, device):
     elif regularization_loss == 'L1':
         return L1()
     else:
-        raise f"Unknown regularization loss {regularization_loss}"
+        raise Exception(f"Unknown regularization loss {regularization_loss}")

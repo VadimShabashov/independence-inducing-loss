@@ -10,7 +10,7 @@ from losses.zero_loss import ZeroLoss
 
 
 class Model(pl.LightningModule):
-    def __init__(self, model, device, independence_loss, regularization_loss, use_classification_loss,
+    def __init__(self, model, device, independence_loss, regularization_loss, classification_loss,
                  num_classes, embedding_dim, margin):
         super().__init__()
 
@@ -26,7 +26,7 @@ class Model(pl.LightningModule):
         self.independence_loss = independence_loss
         self.regularization_loss = regularization_loss
 
-        if use_classification_loss:
+        if classification_loss == 'Enable':
             self.classification_loss = nn.CrossEntropyLoss()
         else:
             self.classification_loss = ZeroLoss(device)
@@ -71,7 +71,7 @@ class Model(pl.LightningModule):
         loss = ranking_loss + regularization_loss + independence_loss + classification_loss
 
         # Find accuracy
-        accuracy = torch.sum(preds == labels) / len(preds)
+        accuracy = torch.sum(torch.eq(preds, labels)) / len(preds)
 
         # define outputs with losses
         outputs = {

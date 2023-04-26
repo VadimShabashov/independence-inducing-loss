@@ -62,10 +62,10 @@ class KurtosisLoss:
         self.eps = torch.tensor(eps, device=device)
 
     def __call__(self, x):
-        std_x = torch.maximum(torch.std(x, axis=0), self.eps)
+        std_x = torch.maximum(torch.std(x, dim=0), self.eps)
         dev = x - x.mean(axis=0)
 
-        kurtosises = torch.mean((dev / std_x) ** 4, axis=0) - 3
+        kurtosises = torch.mean((dev / std_x) ** 4, dim=0) - 3
         kurtosis = torch.abs(kurtosises).mean()
 
         return self.alpha / max(kurtosis, self.eps)

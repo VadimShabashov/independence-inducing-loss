@@ -17,7 +17,7 @@ def plot_metric_histograms(experiment_path, experiments, metrics):
 
     for experiment_ind, experiment in enumerate(experiments):
         # Get experiment parameters
-        dataset_name, embedding_dim, regularization_loss, use_classification_loss, batch, margin, model_name, \
+        dataset_name, embedding_dim, regularization_loss, classification_loss, batch, margin, model_name, \
             independence_loss, num_epochs_passed, metrics_storage = experiment
 
         # Get experiment axis
@@ -49,7 +49,7 @@ def plot_metric_histograms(experiment_path, experiments, metrics):
             f"Dataset = {dataset_name}",
             f"Emb. dim = {embedding_dim}",
             f"Reg. loss = {regularization_loss}",
-            f"Class. loss = {use_classification_loss}",
+            f"Class. loss = {classification_loss}",
             f"Batch = {batch}",
             f"Margin = {margin}",
             f"Model = {model_name}",

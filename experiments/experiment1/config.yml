@@ -1,5 +1,7 @@
 dataset:
     - CIFAR10
+    - Oxford5k
+    - GoogleLandmarks
 model:
     - ResNet18
 embedding_dim:
@@ -8,8 +10,8 @@ independence_loss:
     - null
 regularization_loss:
     - null
-use_classification_loss:
-    - true
+classification_loss:
+    - Enable
 margin:
     - 0.5
 num_epochs_in_step: 1
@@ -21,6 +23,7 @@ track_metric:
     - P@3
     - P@5
     - P@10
+    - MAP
     - Independence
     - Sparsity
 plot_hist_metric:

@@ -37,7 +37,7 @@ def parse_config(experiment_path):
     # Check that all required fields were provided
     required_fields = [
         'dataset', 'model', 'embedding_dim',
-        'independence_loss', 'regularization_loss', 'use_classification_loss',
+        'independence_loss', 'regularization_loss', 'classification_loss',
         'margin', 'num_epochs_in_step', 'num_epoch_steps', 'batch', 'track_metric'
     ]
     missing_fields = []

@@ -26,12 +26,12 @@ Description of the parameters:
 |      embedding_dim      |                                      Dimension of the embeddings.                                      |                       Any positive integer                      |        1024        |     True     |
 |    independence_loss    |                                           Independence loss.                                           | null, NegApproxLoss1, NegApproxLoss2, KurtosisLoss, CorrMatLoss |   NegApproxLoss1   |     True     |
 |   regularization_loss   |                                          Regularization loss.                                          |                             null, L1                            |         L1         |     True     |
-| use_classification_loss |                          Boolean flag, whether to use classification or not.                           |                           true, false                           |        true        |     True     |
+| classification_loss     |                          Flag, whether to use classification or not.                                   |                           Enable, Disable                       |        Enable      |     True     |
 |          margin         |                                   Margin for ranking (triplet) loss.                                   |                         positive double                         |         0.2        |     True     |
 |    num_epochs_in_step   |                                Number epochs between checking metrics.                                 |                         positive integer                        |         10         |     True     |
 |     num_epoch_steps     |                                Number of steps (times) to check metrics                                |                         positive integer                        |          5         |     True     |
-|          batch          | Two integers for batch sample: number of classes to select, number of samples for each of the classes. |         Pair of two positive integers, separated with /         |         5/5        |     True     |
-|       track_metric      |                               Metrics to track and save in the csv file.                               |                   P@k, Independence, Sparsity                   |         P@1        |     True     |
+|          batch          | Two integers for batch sample: number of classes to select, number of samples for each of the classes. |         Pair of two positive integers, separated with '/'       |         5/5        |     True     |
+|       track_metric      |                               Metrics to track and save in the csv file.                               |                   P@k, MAP, Independence, Sparsity              |         P@1        |     True     |
 |     plot_hist_metric    |                                    Metrics to plot histograms for.                                     |                   P@k, Independence, Sparsity                   |         P@1        |     False    |
 
 Note: for some parameters several values can be set. In that case platform will run experiment for each of the
@@ -55,8 +55,8 @@ independence_loss:
     - null
 regularization_loss:
     - null
-use_classification_loss:
-    - true
+classification_loss:
+    - Enable
 margin:
     - 0.5
 num_epochs_in_step: 1
@@ -68,6 +68,7 @@ track_metric:
     - P@3
     - P@5
     - P@10
+    - MAP
     - Independence
     - Sparsity
 plot_hist_metric:
@@ -86,9 +87,9 @@ plot_hist_metric:
    ```
 3. Download desired datasets, extract from archives put them into `datasets/data`.
    * CIFAR10
-   
+
       Download [link](https://www.kaggle.com/datasets/swaroopkml/cifar10-pngs-in-folders)
-      
+
       Required project structure:
       ```
       ├── datasets
@@ -98,9 +99,9 @@ plot_hist_metric:
       │   │   │   ├── test
       ```
    * Oxford5k
-   
+
       Download [link](https://www.kaggle.com/datasets/vadimshabashov/oxford5k)
-      
+
       Required project structure:
       ```
       ├── datasets
@@ -110,9 +111,9 @@ plot_hist_metric:
       │   │   │   ├── groundtruth.json
       ```
    * Google Landmarks (subset)
-   
+
       Download [link](https://www.kaggle.com/datasets/confirm/google-landmark-dataset-v2-micro)
-      
+
       Required project structure:
       ```
       ├── datasets
@@ -136,10 +137,10 @@ plot_hist_metric:
 
    * Results for `track_metrics` are saved in the `results.csv`.
    * Histograms for `plot_hist_metric` are saved in the `histograms.png`.
-   
+
 7. Optional. For convenient visualization of `track_metrics`, one can run the following script:
    ```
    python3 visualization --experiment_path=<path to the config.yml>
    ```
-   
+
    The script reads the `results.csv` file and prints it as table to the output.

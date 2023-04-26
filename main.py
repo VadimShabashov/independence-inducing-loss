@@ -43,12 +43,6 @@ def main(experiment_path):
         device = 'cuda' if torch.cuda.is_available() else 'cpu'
         logger.info(f"Using device='{device}'")
 
-        # Create trainer
-        trainer = pl.Trainer(
-            max_epochs=num_epochs_in_step,
-            accelerator=device
-        )
-
         # For tracking metrics and saving to csv in the end
         tracking_results = []
         fields = [
@@ -78,7 +72,7 @@ def main(experiment_path):
                         # Get regularization loss
                         regularization_loss = get_regularization_loss(regularization_loss_name, device)
 
-                        for use_classification_loss_name in config['use_classification_loss']:
+                        for classification_loss in config['classification_loss']:
                             for margin in config['margin']:
                                 for model_name in config['model']:
                                     for independence_loss_name in config['independence_loss']:
@@ -90,7 +84,7 @@ def main(experiment_path):
                                             "\nModel with configuration: " +
                                             f"dataset={dataset_name}, model={model_name}, embedding dim={embedding_dim}, " +
                                             f"ind. loss={independence_loss_name}, reg. loss={regularization_loss_name}, " +
-                                            f"class. loss={use_classification_loss_name}, batch={batch}, " +
+                                            f"class. loss={classification_loss}, batch={batch}, " +
                                             f"margin={margin}, num_epochs_in_step={num_epochs_in_step}, " +
                                             f"num_epoch_steps={num_epoch_steps}"
                                         )
@@ -98,24 +92,32 @@ def main(experiment_path):
                                         # Create model
                                         model = Model(
                                             model_name, device, independence_loss, regularization_loss,
-                                            use_classification_loss_name, num_classification_classes, embedding_dim, margin
+                                            classification_loss, num_classification_classes, embedding_dim, margin
                                         )
 
                                         for epoch_step in range(num_epoch_steps):
+                                            # Create trainer
+                                            trainer = pl.Trainer(
+                                                max_epochs=num_epochs_in_step,
+                                                accelerator=device
+                                            )
+
                                             # Run training
                                             trainer.fit(model, train_dataloader)
 
                                             # Get database and query embeddings
-                                            database_embs, database_labels = run_inference(
+                                            database_embeddings, database_labels = run_inference(
                                                 trainer, test_database_dataloader, model
                                             )
-                                            query_embs, query_labels = run_inference(
+                                            query_embeddings, query_labels = run_inference(
                                                 trainer, test_query_dataloader, model
                                             )
 
                                             # Calculate metrics
                                             metrics_storage = MetricsStorage(
-                                                all_metrics, database_embs, database_labels, query_embs, query_labels
+                                                all_metrics,
+                                                database_embeddings, database_labels,
+                                                query_embeddings, query_labels
                                             )
 
                                             # Calculate mean of track metrics
@@ -127,7 +129,7 @@ def main(experiment_path):
                                             # Add results to table
                                             tracking_results.append([
                                                 dataset_name, embedding_dim,
-                                                regularization_loss_name, use_classification_loss_name,
+                                                regularization_loss_name, classification_loss,
                                                 batch, margin, model_name,
                                                 independence_loss_name, num_epochs_passed,
                                                 *mean_track_metrics
@@ -138,7 +140,7 @@ def main(experiment_path):
                                                 experiments.append(
                                                     (
                                                         dataset_name, embedding_dim,
-                                                        regularization_loss_name, use_classification_loss_name,
+                                                        regularization_loss_name, classification_loss,
                                                         batch, margin, model_name,
                                                         independence_loss_name, num_epochs_passed,
                                                         metrics_storage
