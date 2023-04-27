@@ -1,8 +1,9 @@
 import random
 from collections import defaultdict
+from torch.utils.data import BatchSampler
 
 
-class TripletBatchSampler:
+class TripletBatchSampler(BatchSampler):
     """
     Batch sampler, that randomly selects num_classes, then randomly select min(num_samples, size of class) from them.
     The idea of such sampling technique: https://arxiv.org/pdf/1703.07737.pdf
@@ -10,10 +11,11 @@ class TripletBatchSampler:
     """
 
     def __init__(self, labels, num_classes, num_samples):
+        super().__init__(sampler=labels, batch_size=num_classes * num_samples, drop_last=False)
+        
         self.labels = labels
         self.num_classes = num_classes
         self.num_samples = num_samples
-        self.batch_size = num_classes * num_samples
 
         # Create dict: label=[indices with such label]
         self.label_to_indices = defaultdict(list)
@@ -45,4 +47,4 @@ class TripletBatchSampler:
             yield indices
 
     def __len__(self):
-        return len(self.labels) // (self.num_classes * self.num_samples)
+        return len(self.labels) // self.batch_size
