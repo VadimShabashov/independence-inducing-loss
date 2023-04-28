@@ -48,6 +48,10 @@ def parse_config(experiment_path):
     if missing_fields:
         raise Exception(f"Add missing fields to config file: {missing_fields}")
 
+    # If optional field 'plot_hist_metric' wasn't used, set default value (empty list of metrics)
+    if 'plot_hist_metric' not in config:
+        config['plot_hist_metric'] = []
+
     # Validate models and metrics
     validate_models(config['model'])
     validate_metrics(config['track_metric'])

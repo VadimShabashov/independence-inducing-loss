@@ -38,10 +38,6 @@ class CIFAR10(DataloadersProvider):
         get_imgs_from_dir(img_dir_train)
         get_imgs_from_dir(img_dir_test)
 
-        # TODO: delete rows before real experiment
-        imgs_paths = [i for k in range(10) for i in imgs_paths[k * 6000:k * 6000 + 100]]
-        imgs_labels = [i for k in range(10) for i in imgs_labels[k * 6000:k * 6000 + 100]]
-
         # Make train/test split. Test will consist of 100 samples equally sampled from each of the classes
         train_idx, test_idx = train_test_split(
             np.arange(len(imgs_labels)),
