@@ -99,7 +99,8 @@ def main(experiment_path):
                                         # Create trainer
                                         trainer = pl.Trainer(
                                             max_epochs=num_epochs_in_step,
-                                            accelerator=device
+                                            accelerator=device,
+                                            devices=1
                                         )
 
                                         # Run training
