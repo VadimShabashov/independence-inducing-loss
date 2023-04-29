@@ -58,3 +58,17 @@ def parse_config(experiment_path):
     validate_metrics(config['plot_hist_metric'])
 
     return config
+
+
+def get_number_experiments(config):
+    multiple_values_fields = [
+        'dataset', 'model', 'embedding_dim',
+        'independence_loss', 'regularization_loss', 'classification_loss',
+        'margin', 'batch'
+    ]
+
+    overall_number_experiments = 1
+    for multiple_values_field in multiple_values_fields:
+        overall_number_experiments *= len(config[multiple_values_field])
+
+    return overall_number_experiments

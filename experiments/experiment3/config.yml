@@ -1,12 +1,8 @@
 dataset:
     - CIFAR10
-    - Oxford5k
-    - GoogleLandmarks
 model:
     - AlexNet
     - ResNet18
-    - ResNet34
-    - ResNet50
     - ViT
 embedding_dim:
     - 1024
@@ -24,8 +20,8 @@ classification_loss:
     - Disable
 margin:
     - 0.2
-num_epochs_in_step: 10
-num_epoch_steps: 10
+num_epochs_in_step: 5
+num_epoch_steps: 5
 batch:
     - 5/5
 track_metric:
