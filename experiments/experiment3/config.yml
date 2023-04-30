@@ -1,3 +1,5 @@
+# In this experiment we estimate models best batch size
+
 dataset:
     - CIFAR10
 model:
@@ -8,22 +10,18 @@ embedding_dim:
     - 1024
 independence_loss:
     - null
-    - NegApproxLoss1
-    - NegApproxLoss2
-    - KurtosisLoss
-    - CorrMatLoss
 regularization_loss:
     - null
-    - L1
 classification_loss:
     - Enable
-    - Disable
 margin:
     - 0.2
-num_epochs_in_step: 5
-num_epoch_steps: 5
+num_epochs_in_step: 3
+num_epoch_steps: 1
 batch:
     - 5/5
+    - 10/5
+    - 10/10
 track_metric:
     - P@1
     - P@3

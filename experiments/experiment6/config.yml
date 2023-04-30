@@ -1,30 +1,22 @@
-# Test 2 (takes too long)
+# In this experiment we evaluate regularization loss
 
 dataset:
     - CIFAR10
     - Oxford5k
-    - GoogleLandmarks
 model:
-    - AlexNet
     - ResNet18
     - ViT
 embedding_dim:
     - 1024
 independence_loss:
     - null
-    - NegApproxLoss1
-    - NegApproxLoss2
-    - KurtosisLoss
-    - CorrMatLoss
 regularization_loss:
-    - null
     - L1
 classification_loss:
     - Enable
-    - Disable
 margin:
     - 0.2
-num_epochs_in_step: 1
+num_epochs_in_step: 5
 num_epoch_steps: 1
 batch:
     - 5/5
