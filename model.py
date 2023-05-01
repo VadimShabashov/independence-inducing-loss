@@ -10,12 +10,12 @@ from losses.zero_loss import ZeroLoss
 
 
 class Model(pl.LightningModule):
-    def __init__(self, model, device, independence_loss, regularization_loss, classification_loss,
-                 num_classes, embedding_dim, margin):
+    def __init__(self, model, device, num_unfrozen_layers, independence_loss, regularization_loss,
+                 classification_loss, num_classes, embedding_dim, margin):
         super().__init__()
 
         # Pretrained model
-        self.model = get_model(model, embedding_dim)
+        self.model = get_model(model, embedding_dim, num_unfrozen_layers)
 
         # Create classification layer
         self.classifier = nn.Linear(embedding_dim, num_classes)
@@ -42,6 +42,7 @@ class Model(pl.LightningModule):
 
     def get_embeddings(self, x):
         # Find embeddings and perform L2 normalization
+        # It's important to note, that normalization + linear layer is linear transform again
         return normalize(self.model(x), p=2)
 
     def get_logits(self, embeddings):
@@ -134,7 +135,7 @@ class Model(pl.LightningModule):
         return embeddings, labels
 
 
-def get_model(model_name, embedding_dim):
+def get_model(model_name, embedding_dim, num_unfrozen_layers):
     if model_name == "ViT":
         # Import model
         from torchvision.models import vit_b_16, ViT_B_16_Weights
@@ -185,6 +186,12 @@ def get_model(model_name, embedding_dim):
 
     else:
         raise Exception(f"Unknown model {model_name}")
+
+    # Freeze required number of layers
+    if isinstance(num_unfrozen_layers, int):
+        for _, module in list(model.named_children())[:-num_unfrozen_layers]:
+            for param in module.parameters():
+                param.requires_grad = False
 
     return model
 

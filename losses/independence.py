@@ -1,7 +1,30 @@
 import torch
 
+from whitening import ZCA, DBN, NoWhitening
 
-class NegApproxLoss1:
+
+class BaseIndependenceLoss:
+    """
+    Base class for independence loss.
+    """
+    def __init__(self, device, whitening, embedding_dim, alpha, eps):
+        self.alpha = alpha
+        self.eps = torch.tensor(eps, device=device)
+        self.device = device
+
+        # Set whitening approach
+        if whitening == 'ZCA':
+            self.whitening = ZCA()
+        elif whitening == 'DBN':
+            self.whitening = DBN(embedding_dim)
+        else:
+            self.whitening = NoWhitening()
+
+    def apply_whitening(self, x):
+        return self.whitening(x)
+
+
+class NegApproxLoss1(BaseIndependenceLoss):
     """
     Minimization of mutual information using negentropy approximation from:
     https://www.cs.helsinki.fi/u/ahyvarin/papers/NIPS97.pdf
@@ -9,11 +32,14 @@ class NegApproxLoss1:
     Minimization of mutual information <=> maximization of negentropy <=> minimization of 1/negentropy
     """
 
-    def __init__(self, device, alpha=10.0, eps=1e-8):
-        self.alpha = alpha
-        self.eps = torch.tensor(eps, device=device)
+    def __init__(self, device, whitening, embedding_dim, alpha=10.0, eps=1e-8):
+        super().__init__(device, whitening, embedding_dim, alpha, eps)
 
-    def __call__(self, x, eps=1e-8):
+    def __call__(self, x):
+        # Apply whitening
+        x = self.apply_whitening(x)
+
+        # Find negentropy approximation for each feature
         k1 = 36 / (8 * torch.sqrt(torch.tensor(3)) - 9)
         k2a = 1 / (2 - 6 / torch.pi)
 
@@ -25,7 +51,7 @@ class NegApproxLoss1:
         return self.alpha / max(neg_approx.mean(), self.eps)
 
 
-class NegApproxLoss2:
+class NegApproxLoss2(BaseIndependenceLoss):
     """
     Minimization of mutual information using negentropy approximation from:
     https://www.cs.helsinki.fi/u/ahyvarin/papers/NIPS97.pdf
@@ -33,11 +59,14 @@ class NegApproxLoss2:
     Minimization of mutual information <=> maximization of negentropy <=> minimization of 1/negentropy
     """
 
-    def __init__(self, device, alpha=10.0, eps=1e-8):
-        self.alpha = alpha
-        self.eps = torch.tensor(eps, device=device)
+    def __init__(self, device, whitening, embedding_dim, alpha=10.0, eps=1e-8):
+        super().__init__(device, whitening, embedding_dim, alpha, eps)
 
-    def __call__(self, x, eps=1e-8):
+    def __call__(self, x):
+        # Apply whitening
+        x = self.apply_whitening(x)
+
+        # Find negentropy approximation for each feature
         k1 = 36 / (8 * torch.sqrt(torch.tensor(3)) - 9)
         k2b = 24 / (16 * torch.sqrt(torch.tensor(3)) - 27)
 
@@ -49,7 +78,7 @@ class NegApproxLoss2:
         return self.alpha / max(neg_approx.mean(), self.eps)
 
 
-class KurtosisLoss:
+class KurtosisLoss(BaseIndependenceLoss):
     """
     Minimize non-gaussianity of output by maximizing kurtosis.
     Kurtosis maximization <=> minimization of 1/kurtosis.
@@ -57,11 +86,14 @@ class KurtosisLoss:
     Example of implementation: https://tntorch.readthedocs.io/en/latest/_modules/metrics.html
     """
 
-    def __init__(self, device, alpha=1.0, eps=1e-8):
-        self.alpha = alpha
-        self.eps = torch.tensor(eps, device=device)
+    def __init__(self, device, whitening, embedding_dim, alpha=1.0, eps=1e-8):
+        super().__init__(device, whitening, embedding_dim, alpha, eps)
 
     def __call__(self, x):
+        # Apply whitening
+        x = self.apply_whitening(x)
+
+        # Find kurtosis for each feature
         std_x = torch.maximum(torch.std(x, dim=0), self.eps)
         dev = x - x.mean(axis=0)
 
@@ -71,12 +103,14 @@ class KurtosisLoss:
         return self.alpha / max(kurtosis, self.eps)
 
 
-class CorrMatLoss:
-    def __init__(self, device, alpha=10.0):
-        self.device = device
-        self.alpha = alpha
+class CorrMatLoss(BaseIndependenceLoss):
+    def __init__(self, device, whitening, embedding_dim, alpha=10.0, eps=1e-8):
+        super().__init__(device, whitening, embedding_dim, alpha, eps)
 
     def __call__(self, x):
+        # Apply whitening
+        x = self.apply_whitening(x)
+
         # Calculate correlation matrix
         correlation_matrix = torch.corrcoef(x.T)
 

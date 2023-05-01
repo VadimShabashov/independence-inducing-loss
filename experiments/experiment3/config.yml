@@ -1,5 +1,4 @@
-# In this experiment we estimate models best batch size
-
+# Estimate models best batch size
 dataset:
     - CIFAR10
 model:
@@ -8,6 +7,10 @@ model:
     - ViT
 embedding_dim:
     - 1024
+num_unfrozen_layers:
+    - All
+whitening:
+    - Disable
 independence_loss:
     - null
 regularization_loss:

@@ -19,20 +19,22 @@ The experiment configuration is set in the `config.yml`.
 
 Description of the parameters:
 
-|      **Parameter**      |                                            **Description**                                             |                            **Values**                           | **Syntax example** | **Required** |
-|:-----------------------:|:------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------:|:------------------:|:------------:|
-|         dataset         |                                            Datasets to use.                                            |                CIFAR10, Oxford5k, GoogleLandmarks               |       CIFAR10      |     True     |
-|          model          |                                             Models to use.                                             |            AlexNet, ResNet18, ResNet34, ResNet50, ViT           |      ResNet18      |     True     |
-|      embedding_dim      |                                      Dimension of the embeddings.                                      |                       Any positive integer                      |        1024        |     True     |
-|    independence_loss    |                                           Independence loss.                                           | null, NegApproxLoss1, NegApproxLoss2, KurtosisLoss, CorrMatLoss |   NegApproxLoss1   |     True     |
-|   regularization_loss   |                                          Regularization loss.                                          |                             null, L1                            |         L1         |     True     |
-| classification_loss     |                          Flag, whether to use classification or not.                                   |                           Enable, Disable                       |        Enable      |     True     |
-|          margin         |                                   Margin for ranking (triplet) loss.                                   |                         positive double                         |         0.2        |     True     |
-|    num_epochs_in_step   |                                Number epochs between checking metrics.                                 |                         positive integer                        |         10         |     True     |
-|     num_epoch_steps     |                                Number of steps (times) to check metrics                                |                         positive integer                        |          5         |     True     |
-|          batch          | Two integers for batch sample: number of classes to select, number of samples for each of the classes. |         Pair of two positive integers, separated with '/'       |         5/5        |     True     |
-|       track_metric      |                               Metrics to track and save in the csv file.                               |                   P@k, MAP, Independence, Sparsity              |         P@1        |     True     |
-|     plot_hist_metric    |                                    Metrics to plot histograms for.                                     |                   P@k, Independence, Sparsity                   |         P@1        |     False    |
+|    **Parameter**    |                                            **Description**                                             |                           **Values**                            | **Syntax example** | **Required** |
+|:-------------------:|:------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------:|:------------------:|:------------:|
+|       dataset       |                                            Datasets to use.                                            |               CIFAR10, Oxford5k, GoogleLandmarks                |      CIFAR10       |     True     |
+|        model        |                                             Models to use.                                             |           AlexNet, ResNet18, ResNet34, ResNet50, ViT            |      ResNet18      |     True     |
+|    embedding_dim    |                                      Dimension of the embeddings.                                      |                      Any positive integer                       |        1024        |     True     |
+| num_unfrozen_layers |                           Number of layers (modules) in the model to train.                            |                  Any positive integer or 'All'                  |         3          |     True     |
+|      whitening      |                 Which whitening technique to use before calculating independence loss.                 |                        Disable, ZCA, DBN                        |      Disable       |     True     |
+|  independence_loss  |                                           Independence loss.                                           | null, NegApproxLoss1, NegApproxLoss2, KurtosisLoss, CorrMatLoss |   NegApproxLoss1   |     True     |
+| regularization_loss |                                          Regularization loss.                                          |                            null, L1                             |         L1         |     True     |
+| classification_loss |                              Flag, whether to use classification or not.                               |                         Enable, Disable                         |       Enable       |     True     |
+|       margin        |                                   Margin for ranking (triplet) loss.                                   |                         positive double                         |        0.2         |     True     |
+| num_epochs_in_step  |                                Number epochs between checking metrics.                                 |                        positive integer                         |         10         |     True     |
+|   num_epoch_steps   |                                Number of steps (times) to check metrics                                |                        positive integer                         |         5          |     True     |
+|        batch        | Two integers for batch sample: number of classes to select, number of samples for each of the classes. |        Pair of two positive integers, separated with '/'        |        5/5         |     True     |
+|    track_metric     |                               Metrics to track and save in the csv file.                               |                P@k, MAP, Independence, Sparsity                 |        P@1         |     True     |
+|  plot_hist_metric   |                                    Metrics to plot histograms for.                                     |                   P@k, Independence, Sparsity                   |        P@1         |    False     |
 
 Note: for some parameters several values can be set. In that case platform will run experiment for each of the
 possible configurations.
@@ -51,6 +53,12 @@ model:
     - ViT
 embedding_dim:
     - 1024
+num_unfrozen_layers:
+    - 1
+    - All
+whitening:
+    - Disable
+    - DBN
 independence_loss:
     - null
 regularization_loss:

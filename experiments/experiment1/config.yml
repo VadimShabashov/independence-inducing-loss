@@ -1,13 +1,14 @@
 # Test 1
-
 dataset:
     - CIFAR10
-    - Oxford5k
-    - GoogleLandmarks
 model:
     - ResNet18
 embedding_dim:
     - 1024
+num_unfrozen_layers:
+    - 1
+whitening:
+    - Disable
 independence_loss:
     - null
 regularization_loss:

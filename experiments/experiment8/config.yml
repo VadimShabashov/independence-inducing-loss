@@ -1,25 +1,27 @@
-# Estimate how models perform with/without classification loss and number of epochs
+# For all datasets, run all models with the best params for independence loss
 dataset:
     - CIFAR10
+    - Oxford5k
+    - GoogleLandmarks
 model:
     - ResNet18
+    - ViT
 embedding_dim:
     - 1024
 num_unfrozen_layers:
-    - All
+    - 3
 whitening:
-    - Disable
+    - ZCA
 independence_loss:
-    - null
+    - NegApproxLoss1
 regularization_loss:
     - null
 classification_loss:
-    - Disable
     - Enable
 margin:
     - 0.2
-num_epochs_in_step: 5
-num_epoch_steps: 3
+num_epochs_in_step: 3
+num_epoch_steps: 2
 batch:
     - 10/10
 track_metric:

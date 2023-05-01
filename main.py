@@ -50,7 +50,8 @@ def main(experiment_path):
         # For tracking metrics and saving to csv in the end
         tracking_results = []
         fields = [
-            'Dataset', 'Emb. dim', 'Reg. loss', 'Class. loss', 'Batch', 'Margin', 'Model', 'Ind. loss', 'Epochs',
+            'Dataset', 'Emb. dim', 'Reg. loss', 'Class. loss', 'Batch',
+            'Margin', 'Model', 'Trained Layers', 'Whitening', 'Ind. loss', 'Epochs',
             *track_metrics
         ]
 
@@ -83,82 +84,93 @@ def main(experiment_path):
                         for classification_loss in config['classification_loss']:
                             for margin in config['margin']:
                                 for model_name in config['model']:
-                                    for independence_loss_name in config['independence_loss']:
-                                        # Increment number of passed experiments including the current one
-                                        number_passed_experiments += 1
+                                    for num_unfrozen_layers in config['num_unfrozen_layers']:
+                                        for whitening in config['whitening']:
+                                            for independence_loss_name in config['independence_loss']:
+                                                # Increment number of passed experiments including the current one
+                                                number_passed_experiments += 1
 
-                                        # Get independence loss
-                                        independence_loss = get_independence_loss(independence_loss_name, device)
+                                                # Get independence loss
+                                                independence_loss = get_independence_loss(
+                                                    independence_loss_name, device,
+                                                    whitening, embedding_dim
+                                                )
 
-                                        # Display current configuration, so that we can track train losses
-                                        logger.info(
-                                            f"Experiment {number_passed_experiments}/{overall_number_experiments}\n" +
-                                            "Model with configuration: " +
-                                            f"dataset={dataset_name}, model={model_name}, embedding dim={embedding_dim}, " +
-                                            f"ind. loss={independence_loss_name}, reg. loss={regularization_loss_name}, " +
-                                            f"class. loss={classification_loss}, batch={batch}, " +
-                                            f"margin={margin}, num_epochs_in_step={num_epochs_in_step}, " +
-                                            f"num_epoch_steps={num_epoch_steps}"
-                                        )
+                                                # Display current configuration, so that we can track train losses
+                                                logger.info(
+                                                    f"Experiment {number_passed_experiments}/{overall_number_experiments}\n" +
+                                                    "Model with configuration: " +
+                                                    f"dataset={dataset_name}, model={model_name}, " +
+                                                    f"embedding_dim={embedding_dim}, whitening={whitening}, " +
+                                                    f"num_unfrozen_layers={num_unfrozen_layers}, " +
+                                                    f"ind. loss={independence_loss_name}, " +
+                                                    f"reg. loss={regularization_loss_name}, " +
+                                                    f"class. loss={classification_loss}, batch={batch}, " +
+                                                    f"margin={margin}, num_epochs_in_step={num_epochs_in_step}, " +
+                                                    f"num_epoch_steps={num_epoch_steps}"
+                                                )
 
-                                        # Create model
-                                        model = Model(
-                                            model_name, device, independence_loss, regularization_loss,
-                                            classification_loss, num_classification_classes, embedding_dim, margin
-                                        )
+                                                # Create model
+                                                model = Model(
+                                                    model_name, device, num_unfrozen_layers, independence_loss,
+                                                    regularization_loss, classification_loss, num_classification_classes,
+                                                    embedding_dim, margin
+                                                )
 
-                                        for epoch_step in range(num_epoch_steps):
-                                            # Create trainer
-                                            trainer = pl.Trainer(
-                                                max_epochs=num_epochs_in_step,
-                                                accelerator=device,
-                                                devices=1
-                                            )
+                                                for epoch_step in range(num_epoch_steps):
+                                                    # Create trainer
+                                                    trainer = pl.Trainer(
+                                                        max_epochs=num_epochs_in_step,
+                                                        accelerator=device,
+                                                        devices=1
+                                                    )
 
-                                            # Run training
-                                            trainer.fit(model, train_dataloader)
+                                                    # Run training
+                                                    trainer.fit(model, train_dataloader)
 
-                                            # Get database and query embeddings
-                                            database_embeddings, database_labels = run_inference(
-                                                trainer, test_database_dataloader, model
-                                            )
-                                            query_embeddings, query_labels = run_inference(
-                                                trainer, test_query_dataloader, model
-                                            )
+                                                    # Get database and query embeddings
+                                                    database_embeddings, database_labels = run_inference(
+                                                        trainer, test_database_dataloader, model
+                                                    )
+                                                    query_embeddings, query_labels = run_inference(
+                                                        trainer, test_query_dataloader, model
+                                                    )
 
-                                            # Calculate metrics
-                                            metrics_storage = MetricsStorage(
-                                                all_metrics,
-                                                database_embeddings, database_labels,
-                                                query_embeddings, query_labels
-                                            )
+                                                    # Calculate metrics
+                                                    metrics_storage = MetricsStorage(
+                                                        all_metrics,
+                                                        database_embeddings, database_labels,
+                                                        query_embeddings, query_labels
+                                                    )
 
-                                            # Calculate mean of track metrics
-                                            mean_track_metrics = metrics_storage.get_mean_of_metrics(track_metrics)
+                                                    # Calculate mean of track metrics
+                                                    mean_track_metrics = metrics_storage.get_mean_of_metrics(track_metrics)
 
-                                            # Calculate overall
-                                            num_epochs_passed = num_epochs_in_step * (epoch_step + 1)
+                                                    # Calculate overall
+                                                    num_epochs_passed = num_epochs_in_step * (epoch_step + 1)
 
-                                            # Add results to table
-                                            tracking_results.append([
-                                                dataset_name, embedding_dim,
-                                                regularization_loss_name, classification_loss,
-                                                batch, margin, model_name,
-                                                independence_loss_name, num_epochs_passed,
-                                                *mean_track_metrics
-                                            ])
-
-                                            # Save experiment configuration and calculated metrics
-                                            if plot_hist_metrics:
-                                                experiments.append(
-                                                    (
+                                                    # Add results to table
+                                                    tracking_results.append([
                                                         dataset_name, embedding_dim,
                                                         regularization_loss_name, classification_loss,
                                                         batch, margin, model_name,
+                                                        num_unfrozen_layers, whitening,
                                                         independence_loss_name, num_epochs_passed,
-                                                        metrics_storage
-                                                    )
-                                                )
+                                                        *mean_track_metrics
+                                                    ])
+
+                                                    # Save experiment configuration and calculated metrics
+                                                    if plot_hist_metrics:
+                                                        experiments.append(
+                                                            (
+                                                                dataset_name, embedding_dim,
+                                                                regularization_loss_name, classification_loss,
+                                                                batch, margin, model_name,
+                                                                num_unfrozen_layers, whitening,
+                                                                independence_loss_name, num_epochs_passed,
+                                                                metrics_storage
+                                                            )
+                                                        )
 
         # Save mean metrics results
         csv_results_path = os.path.join(experiment_path, 'results.csv')

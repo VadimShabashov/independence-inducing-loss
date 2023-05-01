@@ -26,6 +26,28 @@ def validate_models(models):
         raise Exception(f"Unknown models: {unknown_models}")
 
 
+def validate_whitening(whitening_values):
+    supported_values = ["DBN", "ZCA", "Disable"]
+    unknown_values = []
+    for whitening_value in whitening_values:
+        if whitening_value not in supported_values:
+            unknown_values.append(whitening_value)
+
+    if unknown_values:
+        raise Exception(f"Unknown whitening: {unknown_values}")
+
+
+def validate_num_unfrozen_layers(num_unfrozen_layers_values):
+    bad_values = []
+    for value in num_unfrozen_layers_values:
+        # Check that equals to 'All' or positive integer
+        if value != 'All' and (not isinstance(value, int) or value <= 0):
+            bad_values.append(value)
+
+    if bad_values:
+        raise Exception(f"Bad num_unfrozen_layers values: {bad_values}")
+
+
 def parse_config(experiment_path):
     # Get path to the experiment config
     config_path = os.path.join(experiment_path, 'config.yml')
@@ -36,7 +58,7 @@ def parse_config(experiment_path):
 
     # Check that all required fields were provided
     required_fields = [
-        'dataset', 'model', 'embedding_dim',
+        'dataset', 'model', 'embedding_dim', 'num_unfrozen_layers', 'whitening',
         'independence_loss', 'regularization_loss', 'classification_loss',
         'margin', 'num_epochs_in_step', 'num_epoch_steps', 'batch', 'track_metric'
     ]
@@ -52,17 +74,19 @@ def parse_config(experiment_path):
     if 'plot_hist_metric' not in config:
         config['plot_hist_metric'] = []
 
-    # Validate models and metrics
+    # Validate config params
     validate_models(config['model'])
     validate_metrics(config['track_metric'])
     validate_metrics(config['plot_hist_metric'])
+    validate_whitening(config['whitening'])
+    validate_num_unfrozen_layers(config['num_unfrozen_layers'])
 
     return config
 
 
 def get_number_experiments(config):
     multiple_values_fields = [
-        'dataset', 'model', 'embedding_dim',
+        'dataset', 'model', 'embedding_dim', 'num_unfrozen_layers', 'whitening',
         'independence_loss', 'regularization_loss', 'classification_loss',
         'margin', 'batch'
     ]

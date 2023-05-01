@@ -6,28 +6,28 @@ from losses.independence import NegApproxLoss1, NegApproxLoss2, KurtosisLoss, Co
 from losses.regularization import L1
 
 
-def get_dataset(dataset_name, num_train_classes, num_class_samples):
+def get_dataset(dataset_name, *args):
     if dataset_name == 'CIFAR10':
-        return CIFAR10(num_train_classes, num_class_samples)
+        return CIFAR10(*args)
     elif dataset_name == 'Oxford5k':
-        return Oxford5k(num_train_classes, num_class_samples)
+        return Oxford5k(*args)
     elif dataset_name == 'GoogleLandmarks':
-        return GoogleLandmarks(num_train_classes, num_class_samples)
+        return GoogleLandmarks(*args)
     else:
         raise Exception(f"Unknown dataset {dataset_name}")
 
 
-def get_independence_loss(independence_loss, device):
+def get_independence_loss(independence_loss, device, whitening, embedding_dim):
     if independence_loss is None:
         return ZeroLoss(device)
     elif independence_loss == 'NegApproxLoss1':
-        return NegApproxLoss1(device)
+        return NegApproxLoss1(device, whitening, embedding_dim)
     elif independence_loss == 'NegApproxLoss2':
-        return NegApproxLoss2(device)
+        return NegApproxLoss2(device, whitening, embedding_dim)
     elif independence_loss == 'KurtosisLoss':
-        return KurtosisLoss(device)
+        return KurtosisLoss(device, whitening, embedding_dim)
     elif independence_loss == 'CorrMatLoss':
-        return CorrMatLoss(device)
+        return CorrMatLoss(device, whitening, embedding_dim)
     else:
         raise Exception(f"Unknown regularization loss {independence_loss}")
 
