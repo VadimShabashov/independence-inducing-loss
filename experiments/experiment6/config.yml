@@ -6,7 +6,7 @@ model:
 embedding_dim:
     - 1024
 num_unfrozen_layers:
-    - 3
+    - All
 whitening:
     - Disable
 independence_loss:
