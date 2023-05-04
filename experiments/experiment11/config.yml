@@ -1,4 +1,4 @@
-# Find the best independence loss
+# Compare no independence loss with independence loss with larger constant
 dataset:
     - CIFAR10
 model:
@@ -12,9 +12,6 @@ whitening:
 independence_loss:
     - null
     - NegApproxLoss1
-    - NegApproxLoss2
-    - KurtosisLoss
-    - CorrMatLoss
 regularization_loss:
     - null
 classification_loss:
