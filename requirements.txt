@@ -10,4 +10,3 @@ scikit_learn==1.2.2
 torch==2.0.0
 torchvision==0.15.1
 torchmetrics==0.11.4
-kornia==0.6.12

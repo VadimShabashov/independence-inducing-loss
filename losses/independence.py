@@ -14,9 +14,9 @@ class BaseIndependenceLoss:
 
         # Set whitening approach
         if whitening == 'ZCA':
-            self.whitening = ZCA()
+            self.whitening = ZCA(embedding_dim, device)
         elif whitening == 'DBN':
-            self.whitening = DBN(embedding_dim)
+            self.whitening = DBN(embedding_dim, device)
         else:
             self.whitening = NoWhitening()
 
