@@ -1,4 +1,4 @@
-# Estimate how models perform with/without classification loss and number of epochs
+# Add whitening.
 dataset:
     - CIFAR10
 model:
@@ -6,22 +6,21 @@ model:
 embedding_dim:
     - 1024
 num_unfrozen_layers:
-    - All
+    - 1
 whitening:
-    - Disable
+    - ZCA
 independence_loss:
-    - null
+    - NegApproxLoss1
 regularization_loss:
     - null
 classification_loss:
-    - Disable
     - Enable
 margin:
     - 0.2
-num_epochs_in_step: 5
+num_epochs_in_step: 1
 num_epoch_steps: 3
 batch:
-    - 10/10
+    - 10/40
 track_metric:
     - P@1
     - P@3

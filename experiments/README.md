@@ -10,14 +10,26 @@ The sequence of experiments in this folder is an attempt to estimate each of the
 they might behave in a different way when changing together. But it seems like a reasonable approximation.
 
 The experiments descriptions are presented below:
-1. Test 1: check that everything is working.
-2. Test 2: check that everything is working.
-3. Find the best batch size for all models.
-4. Find number of epochs and whether classification loss should be used or not.
-5. Find the best number of unfrozen layers.
-6. Find the best independence loss.
-7. Find the best whitening for independence loss.
-8. For all datasets, run model with independence loss and the best found parameters.
-9. For all datasets, run model with regularization loss or with no specific loss (without regularization and independence loss).
-
-Experiments 9 and 10 allow to compare performance on different datasets of all the models with and without independence loss.
+1. Testing part.
+   1. Check that everything is working.
+   2. Check that everything is working.
+2. Best parameters for model without independence loss.
+   1. Find the best batch size for each model.
+   2. Find whether classification loss should be used or not.
+   3. Find the best number of unfrozen layers.
+3. Best parameters for model with independence loss.
+   1. Run independence losses without whitening for all layers.
+   2. Increase constant for independence loss.
+   3. Increase batch size.
+   4. Add whitening.
+   5. Check best number of unfrozen layers.
+   6. Find best batch size.
+   7. Find best whitening (?!)
+   8. Remove whitening, but restrain to single training layer (?!)
+4. Comparison of the best models.
+   
+   The experiments below compare performance on different datasets of the best models with and without independence loss.
+   
+   1. Best models without independence loss (with and without regularization).
+   2. Best models with KurtosisLoss or CorrMatLoss.
+   3. Best models with NegApproxLoss1 or NegApproxLoss2.

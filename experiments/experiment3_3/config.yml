@@ -1,4 +1,4 @@
-# Find the best independence loss
+# Increase batch size
 dataset:
     - CIFAR10
 model:
@@ -12,9 +12,6 @@ whitening:
 independence_loss:
     - null
     - NegApproxLoss1
-    - NegApproxLoss2
-    - KurtosisLoss
-    - CorrMatLoss
 regularization_loss:
     - null
 classification_loss:
@@ -24,7 +21,7 @@ margin:
 num_epochs_in_step: 1
 num_epoch_steps: 15
 batch:
-    - 10/10
+    - 10/40
 track_metric:
     - P@1
     - P@3

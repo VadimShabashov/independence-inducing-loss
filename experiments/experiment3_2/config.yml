@@ -1,10 +1,8 @@
-# Estimate models best batch size
+# Run independence loss with larger constant
 dataset:
     - CIFAR10
 model:
-    - AlexNet
     - ResNet18
-    - ViT
 embedding_dim:
     - 1024
 num_unfrozen_layers:
@@ -13,17 +11,16 @@ whitening:
     - Disable
 independence_loss:
     - null
+    - NegApproxLoss1
 regularization_loss:
     - null
 classification_loss:
     - Enable
 margin:
     - 0.2
-num_epochs_in_step: 3
-num_epoch_steps: 1
+num_epochs_in_step: 1
+num_epoch_steps: 15
 batch:
-    - 5/5
-    - 10/5
     - 10/10
 track_metric:
     - P@1
