@@ -1,4 +1,4 @@
-# Find best batch size for model with independence loss.
+# Find best whitening.
 dataset:
     - CIFAR10
 model:
@@ -8,7 +8,8 @@ embedding_dim:
 num_unfrozen_layers:
     - 1
 whitening:
-    - ZCA
+    - ZCA1
+    - ZCA2
 independence_loss:
     - NegApproxLoss1
 regularization_loss:
@@ -21,8 +22,6 @@ num_epochs_in_step: 1
 num_epoch_steps: 5
 batch:
     - 10/40
-    - 10/10
-    - 5/5
 track_metric:
     - P@1
     - P@3

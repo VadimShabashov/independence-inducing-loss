@@ -25,7 +25,7 @@ Description of the parameters:
 |        model        |                                             Models to use.                                             |           AlexNet, ResNet18, ResNet34, ResNet50, ViT            |      ResNet18      |     True     |
 |    embedding_dim    |                                      Dimension of the embeddings.                                      |                      Any positive integer                       |        1024        |     True     |
 | num_unfrozen_layers |                           Number of layers (modules) in the model to train.                            |                  Any positive integer or 'All'                  |         3          |     True     |
-|      whitening      |                 Which whitening technique to use before calculating independence loss.                 |                        Disable, ZCA, DBN                        |      Disable       |     True     |
+|      whitening      |                 Which whitening technique to use before calculating independence loss.                 |                       Disable, ZCA1, ZCA2                       |      Disable       |     True     |
 |  independence_loss  |                                           Independence loss.                                           | null, NegApproxLoss1, NegApproxLoss2, KurtosisLoss, CorrMatLoss |   NegApproxLoss1   |     True     |
 | regularization_loss |                                          Regularization loss.                                          |                            null, L1                             |         L1         |     True     |
 | classification_loss |                              Flag, whether to use classification or not.                               |                         Enable, Disable                         |       Enable       |     True     |
@@ -58,7 +58,7 @@ num_unfrozen_layers:
     - All
 whitening:
     - Disable
-    - DBN
+    - ZCA1
 independence_loss:
     - null
 regularization_loss:

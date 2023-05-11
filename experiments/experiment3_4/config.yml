@@ -8,7 +8,7 @@ embedding_dim:
 num_unfrozen_layers:
     - 1
 whitening:
-    - ZCA
+    - ZCA1
 independence_loss:
     - NegApproxLoss1
 regularization_loss:

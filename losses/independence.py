@@ -1,6 +1,6 @@
 import torch
 
-from whitening import ZCA, DBN, NoWhitening
+from whitening import ZCA1, ZCA2, NoWhitening
 
 
 class BaseIndependenceLoss:
@@ -13,10 +13,12 @@ class BaseIndependenceLoss:
         self.device = device
 
         # Set whitening approach
-        if whitening == 'ZCA':
-            self.whitening = ZCA(embedding_dim, device)
-        elif whitening == 'DBN':
-            self.whitening = DBN(embedding_dim, device)
+        if whitening == 'ZCA1':
+            self.whitening = ZCA1(device=device, num_features=embedding_dim)
+        elif whitening == 'ZCA2':
+            self.whitening = ZCA2(
+                device=device, num_features=embedding_dim, num_groups=1, T=5, dim=2, affine=False
+            )
         else:
             self.whitening = NoWhitening()
 
@@ -114,10 +116,10 @@ class CorrMatLoss(BaseIndependenceLoss):
         # Calculate correlation matrix
         correlation_matrix = torch.corrcoef(x.T)
 
-        # Replace nan with 0 (nan appears due to constant value -> zero variance)
-        correlation_matrix[torch.isnan(correlation_matrix)] = 0.0
+        # Create mask for diagonal elements
+        diagonal_elements_mask = torch.eye(correlation_matrix.shape[0], dtype=torch.bool)
 
-        # Find non-diagonal elements of correlation matrix
-        non_diagonal_correlation_matrix = correlation_matrix - torch.diag(correlation_matrix.diagonal())
+        # Get non-diagonal elements
+        non_diagonal_elements = correlation_matrix[~diagonal_elements_mask]
 
-        return self.alpha * non_diagonal_correlation_matrix.abs().mean()
+        return self.alpha * non_diagonal_elements.abs().mean()

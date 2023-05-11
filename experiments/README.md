@@ -24,12 +24,9 @@ The experiments descriptions are presented below:
    4. Add whitening.
    5. Check best number of unfrozen layers.
    6. Find best batch size.
-   7. Find best whitening (?!)
-   8. Remove whitening, but restrain to single training layer (?!)
-4. Comparison of the best models.
-   
-   The experiments below compare performance on different datasets of the best models with and without independence loss.
-   
+   7. Find best whitening.
+   8. Remove whitening, unfreeze single layer.
+4. Comparison of the best models on different datasets.
    1. Best models without independence loss (with and without regularization).
    2. Best models with KurtosisLoss or CorrMatLoss.
    3. Best models with NegApproxLoss1 or NegApproxLoss2.

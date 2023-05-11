@@ -10,7 +10,7 @@ num_unfrozen_layers:
     - 3
     - All
 whitening:
-    - ZCA
+    - ZCA1
 independence_loss:
     - NegApproxLoss1
 regularization_loss:

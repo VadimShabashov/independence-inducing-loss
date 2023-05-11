@@ -27,7 +27,7 @@ def validate_models(models):
 
 
 def validate_whitening(whitening_values):
-    supported_values = ["DBN", "ZCA", "Disable"]
+    supported_values = ["ZCA1", "ZCA2", "Disable"]
     unknown_values = []
     for whitening_value in whitening_values:
         if whitening_value not in supported_values:
