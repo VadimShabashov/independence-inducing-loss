@@ -1,4 +1,4 @@
-# Remove L2, check classification loss, increase number of epochs.
+# Remove whitening, unfreeze single layer.
 dataset:
     - CIFAR10
 model:
@@ -8,18 +8,17 @@ embedding_dim:
 num_unfrozen_layers:
     - 1
 whitening:
-    - ZCA2
+    - Disable
 independence_loss:
     - NegApproxLoss1
 regularization_loss:
     - null
 classification_loss:
     - Enable
-    - Disable
 margin:
     - 0.2
 num_epochs_in_step: 1
-num_epoch_steps: 10
+num_epoch_steps: 5
 batch:
     - 10/40
 track_metric:

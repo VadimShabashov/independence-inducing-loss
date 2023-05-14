@@ -1,6 +1,7 @@
 import torch
 
 from whitening import ZCA1, ZCA2, NoWhitening
+from utils import non_diagonal_correlation
 
 
 class BaseIndependenceLoss:
@@ -34,7 +35,7 @@ class NegApproxLoss1(BaseIndependenceLoss):
     Minimization of mutual information <=> maximization of negentropy <=> minimization of 1/negentropy
     """
 
-    def __init__(self, device, whitening, embedding_dim, alpha=1.0, eps=1e-8):
+    def __init__(self, device, whitening, embedding_dim, alpha=5.0, eps=1e-8):
         super().__init__(device, whitening, embedding_dim, alpha, eps)
 
     def __call__(self, x):
@@ -110,16 +111,4 @@ class CorrMatLoss(BaseIndependenceLoss):
         super().__init__(device, whitening, embedding_dim, alpha, eps)
 
     def __call__(self, x):
-        # Apply whitening
-        x = self.apply_whitening(x)
-
-        # Calculate correlation matrix
-        correlation_matrix = torch.corrcoef(x.T)
-
-        # Create mask for diagonal elements
-        diagonal_elements_mask = torch.eye(correlation_matrix.shape[0], dtype=torch.bool)
-
-        # Get non-diagonal elements
-        non_diagonal_elements = correlation_matrix[~diagonal_elements_mask]
-
-        return self.alpha * non_diagonal_elements.abs().mean()
+        return self.alpha * non_diagonal_correlation(x)

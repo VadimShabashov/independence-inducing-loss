@@ -2,6 +2,8 @@ import re
 import torch
 from torchmetrics import RetrievalMAP
 
+from utils import non_diagonal_correlation
+
 
 class MetricsStorage:
     def __init__(self, metrics, database_embeddings, database_labels, query_embeddings, query_labels):
@@ -17,8 +19,8 @@ class MetricsStorage:
                     (self.calculate_sparsity(database_embeddings), self.calculate_sparsity(query_embeddings))
                 )
             elif metric == 'Independence':
-                self.metrics['Independence'] = torch.cat(
-                    (self.calculate_independence(database_embeddings), self.calculate_independence(query_embeddings))
+                self.metrics['Independence'] = 0.5 * (
+                    self.calculate_independence(database_embeddings) + self.calculate_independence(query_embeddings)
                 )
             elif p_at_k_pattern.match(metric) or metric == 'MAP':
                 ranking_metrics.append(metric)
@@ -36,17 +38,7 @@ class MetricsStorage:
 
     @staticmethod
     def calculate_independence(embeddings):
-        # Calculate correlation matrix
-        correlation_matrix = torch.corrcoef(embeddings.T)
-
-        # Replace nan with 0 (nan appears due to constant value -> zero variance)
-        correlation_matrix[torch.isnan(correlation_matrix)] = 0.0
-
-        # Find non-diagonal elements of correlation matrix
-        non_diagonal_correlation_matrix = torch.abs(correlation_matrix) - torch.eye(correlation_matrix.shape[0])
-
-        # For each feature find mean over its correlation with others
-        return non_diagonal_correlation_matrix.mean(dim=1)
+        return non_diagonal_correlation(embeddings)
 
     def calculate_ranking_metrics(self, database_embeddings, database_labels, query_embeddings, query_labels, ranking_metrics):
         # For each query embedding calculate distances to embeddings in database

@@ -24,9 +24,10 @@ The experiments descriptions are presented below:
    4. Add whitening.
    5. Check best number of unfrozen layers.
    6. Find best batch size.
-   7. Find best whitening.
+   7. Compare whitening techniques.
    8. Decrease constant for independence loss.
    9. Remove whitening, unfreeze single layer.
+   10. Increase constant for independence loss and remove L2.
 4. Comparison of the best models on different datasets.
    1. Best models without independence loss (with and without regularization).
    2. Best models with KurtosisLoss or CorrMatLoss.
