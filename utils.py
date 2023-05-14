@@ -1,5 +1,3 @@
-import torch
-
 from datasets.cifar10 import CIFAR10
 from datasets.oxford5k import Oxford5k
 from datasets.google_landmarks import GoogleLandmarks
@@ -41,20 +39,3 @@ def get_regularization_loss(regularization_loss, device):
         return L1()
     else:
         raise Exception(f"Unknown regularization loss {regularization_loss}")
-
-
-def non_diagonal_correlation(x):
-    """
-    Calculation of the mean for non-diagonal elements of correlation matrix.
-    """
-
-    # Calculate correlation matrix
-    correlation_matrix = torch.corrcoef(x.T)
-
-    # Create mask for diagonal elements
-    diagonal_elements_mask = torch.eye(correlation_matrix.shape[0], dtype=torch.bool)
-
-    # Get non-diagonal elements
-    non_diagonal_elements = correlation_matrix[~diagonal_elements_mask]
-
-    return non_diagonal_elements.abs().mean()

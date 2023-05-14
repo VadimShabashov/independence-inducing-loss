@@ -1,7 +1,7 @@
 import torch
 
 from whitening import ZCA1, ZCA2, NoWhitening
-from utils import non_diagonal_correlation
+from correlation import non_diagonal_correlation
 
 
 class BaseIndependenceLoss:

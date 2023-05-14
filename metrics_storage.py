@@ -2,7 +2,7 @@ import re
 import torch
 from torchmetrics import RetrievalMAP
 
-from utils import non_diagonal_correlation
+from correlation import non_diagonal_correlation
 
 
 class MetricsStorage:
