@@ -10,7 +10,7 @@ from losses.zero_loss import ZeroLoss
 
 
 class Model(pl.LightningModule):
-    def __init__(self, model, device, num_unfrozen_layers, independence_loss, regularization_loss,
+    def __init__(self, model, device, num_unfrozen_layers, whitening, independence_loss, regularization_loss,
                  classification_loss, num_classes, embedding_dim, margin):
         super().__init__()
 
@@ -25,6 +25,9 @@ class Model(pl.LightningModule):
         # Save losses
         self.independence_loss = independence_loss
         self.regularization_loss = regularization_loss
+
+        # Save whitening
+        self.whitening = whitening
 
         if classification_loss == 'Enable':
             self.classification_loss = nn.CrossEntropyLoss()
@@ -41,9 +44,8 @@ class Model(pl.LightningModule):
         self.app_logger = logging.getLogger()
 
     def get_embeddings(self, x):
-        # Find embeddings and perform L2 normalization
-        # It's important to note, that normalization + linear layer is linear transform again
-        return normalize(self.model(x), p=2)
+        # Find embeddings, perform L2 normalization and whitening
+        return self.whitening(normalize(self.model(x), p=2))
 
     def get_logits(self, embeddings):
         return self.classifier(self.relu(embeddings))

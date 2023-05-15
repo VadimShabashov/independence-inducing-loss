@@ -7,7 +7,7 @@ import pytorch_lightning as pl
 
 from model import Model, run_inference
 from metrics_storage import MetricsStorage
-from utils import get_dataset, get_independence_loss, get_regularization_loss
+from utils import get_dataset, get_independence_loss, get_regularization_loss, get_whitening
 from config_parser import parse_config, get_number_experiments
 from visualization import plot_metric_histograms
 
@@ -85,15 +85,18 @@ def main(experiment_path):
                             for margin in config['margin']:
                                 for model_name in config['model']:
                                     for num_unfrozen_layers in config['num_unfrozen_layers']:
-                                        for whitening in config['whitening']:
+                                        for whitening_name in config['whitening']:
+
+                                            # Get whitening
+                                            whitening = get_whitening(whitening_name, device, embedding_dim)
+
                                             for independence_loss_name in config['independence_loss']:
                                                 # Increment number of passed experiments including the current one
                                                 number_passed_experiments += 1
 
                                                 # Get independence loss
                                                 independence_loss = get_independence_loss(
-                                                    independence_loss_name, device,
-                                                    whitening, embedding_dim
+                                                    independence_loss_name, device
                                                 )
 
                                                 # Display current configuration, so that we can track train losses
@@ -101,7 +104,7 @@ def main(experiment_path):
                                                     f"Experiment {number_passed_experiments}/{overall_number_experiments}\n" +
                                                     "Model with configuration: " +
                                                     f"dataset={dataset_name}, model={model_name}, " +
-                                                    f"embedding_dim={embedding_dim}, whitening={whitening}, " +
+                                                    f"embedding_dim={embedding_dim}, whitening={whitening_name}, " +
                                                     f"num_unfrozen_layers={num_unfrozen_layers}, " +
                                                     f"ind. loss={independence_loss_name}, " +
                                                     f"reg. loss={regularization_loss_name}, " +
@@ -112,7 +115,7 @@ def main(experiment_path):
 
                                                 # Create model
                                                 model = Model(
-                                                    model_name, device, num_unfrozen_layers, independence_loss,
+                                                    model_name, device, num_unfrozen_layers, whitening, independence_loss,
                                                     regularization_loss, classification_loss, num_classification_classes,
                                                     embedding_dim, margin
                                                 )
@@ -154,7 +157,7 @@ def main(experiment_path):
                                                         dataset_name, embedding_dim,
                                                         regularization_loss_name, classification_loss,
                                                         batch, margin, model_name,
-                                                        num_unfrozen_layers, whitening,
+                                                        num_unfrozen_layers, whitening_name,
                                                         independence_loss_name, num_epochs_passed,
                                                         *mean_track_metrics
                                                     ])
@@ -166,7 +169,7 @@ def main(experiment_path):
                                                                 dataset_name, embedding_dim,
                                                                 regularization_loss_name, classification_loss,
                                                                 batch, margin, model_name,
-                                                                num_unfrozen_layers, whitening,
+                                                                num_unfrozen_layers, whitening_name,
                                                                 independence_loss_name, num_epochs_passed,
                                                                 metrics_storage
                                                             )

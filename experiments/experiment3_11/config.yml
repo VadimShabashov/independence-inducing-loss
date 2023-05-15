@@ -1,10 +1,11 @@
-# Add whitening to the result embedding
+# Check best batch size and embedding dimension
 dataset:
     - CIFAR10
 model:
     - ResNet18
 embedding_dim:
     - 1024
+    - 128
 num_unfrozen_layers:
     - 1
 whitening:
@@ -18,9 +19,11 @@ classification_loss:
 margin:
     - 0.2
 num_epochs_in_step: 1
-num_epoch_steps: 30
+num_epoch_steps: 10
 batch:
     - 10/40
+    - 10/10
+    - 5/5
 track_metric:
     - P@1
     - P@3

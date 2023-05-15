@@ -1,6 +1,5 @@
 import torch
 
-from whitening import ZCA1, ZCA2, NoWhitening
 from correlation import non_diagonal_correlation
 
 
@@ -8,23 +7,10 @@ class BaseIndependenceLoss:
     """
     Base class for independence loss.
     """
-    def __init__(self, device, whitening, embedding_dim, alpha, eps):
+    def __init__(self, device, alpha, eps):
         self.alpha = alpha
         self.eps = torch.tensor(eps, device=device)
         self.device = device
-
-        # Set whitening approach
-        if whitening == 'ZCA1':
-            self.whitening = ZCA1(device=device, num_features=embedding_dim)
-        elif whitening == 'ZCA2':
-            self.whitening = ZCA2(
-                device=device, num_features=embedding_dim, num_groups=1, T=5, dim=2, affine=False
-            )
-        else:
-            self.whitening = NoWhitening()
-
-    def apply_whitening(self, x):
-        return self.whitening(x)
 
 
 class NegApproxLoss1(BaseIndependenceLoss):
@@ -35,13 +21,10 @@ class NegApproxLoss1(BaseIndependenceLoss):
     Minimization of mutual information <=> maximization of negentropy <=> minimization of 1/negentropy
     """
 
-    def __init__(self, device, whitening, embedding_dim, alpha=5.0, eps=1e-8):
-        super().__init__(device, whitening, embedding_dim, alpha, eps)
+    def __init__(self, device, alpha=5.0, eps=1e-8):
+        super().__init__(device, alpha, eps)
 
     def __call__(self, x):
-        # Apply whitening
-        x = self.apply_whitening(x)
-
         # Find negentropy approximation for each feature
         k1 = 36 / (8 * torch.sqrt(torch.tensor(3)) - 9)
         k2a = 1 / (2 - 6 / torch.pi)
@@ -62,13 +45,10 @@ class NegApproxLoss2(BaseIndependenceLoss):
     Minimization of mutual information <=> maximization of negentropy <=> minimization of 1/negentropy
     """
 
-    def __init__(self, device, whitening, embedding_dim, alpha=10.0, eps=1e-8):
-        super().__init__(device, whitening, embedding_dim, alpha, eps)
+    def __init__(self, device, alpha=10.0, eps=1e-8):
+        super().__init__(device, alpha, eps)
 
     def __call__(self, x):
-        # Apply whitening
-        x = self.apply_whitening(x)
-
         # Find negentropy approximation for each feature
         k1 = 36 / (8 * torch.sqrt(torch.tensor(3)) - 9)
         k2b = 24 / (16 * torch.sqrt(torch.tensor(3)) - 27)
@@ -89,13 +69,10 @@ class KurtosisLoss(BaseIndependenceLoss):
     Example of implementation: https://tntorch.readthedocs.io/en/latest/_modules/metrics.html
     """
 
-    def __init__(self, device, whitening, embedding_dim, alpha=1.0, eps=1e-8):
-        super().__init__(device, whitening, embedding_dim, alpha, eps)
+    def __init__(self, device, alpha=1.0, eps=1e-8):
+        super().__init__(device, alpha, eps)
 
     def __call__(self, x):
-        # Apply whitening
-        x = self.apply_whitening(x)
-
         # Find kurtosis for each feature
         std_x = torch.maximum(torch.std(x, dim=0), self.eps)
         dev = x - x.mean(axis=0)
@@ -107,8 +84,8 @@ class KurtosisLoss(BaseIndependenceLoss):
 
 
 class CorrMatLoss(BaseIndependenceLoss):
-    def __init__(self, device, whitening, embedding_dim, alpha=10.0, eps=1e-8):
-        super().__init__(device, whitening, embedding_dim, alpha, eps)
+    def __init__(self, device, alpha=10.0, eps=1e-8):
+        super().__init__(device, alpha, eps)
 
     def __call__(self, x):
         return self.alpha * non_diagonal_correlation(x)
