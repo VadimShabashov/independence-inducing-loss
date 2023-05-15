@@ -28,6 +28,7 @@ The experiments descriptions are presented below:
    8. Decrease constant for independence loss.
    9. Remove whitening, unfreeze single layer.
    10. Increase constant for independence loss and remove L2.
+   11. Return L2, compare embedding dimension and batch size.
 4. Comparison of the best models on different datasets.
    1. Best models without independence loss (with and without regularization).
    2. Best models with KurtosisLoss or CorrMatLoss.

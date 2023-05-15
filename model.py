@@ -92,7 +92,7 @@ class Model(pl.LightningModule):
 
     def configure_optimizers(self):
         # Optimizer
-        optimizer = torch.optim.Adam(self.parameters(), lr=1e-4, weight_decay=0)
+        optimizer = torch.optim.Adam(self.parameters(), lr=1e-4, weight_decay=1e-4)
 
         # Learning rate scheduler
         lr_scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
