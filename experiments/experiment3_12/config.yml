@@ -1,4 +1,4 @@
-# Compare two whitenings
+# Add whitening to the result embedding
 dataset:
     - CIFAR10
 model:
@@ -8,7 +8,6 @@ embedding_dim:
 num_unfrozen_layers:
     - 1
 whitening:
-    - ZCA1
     - ZCA2
 independence_loss:
     - NegApproxLoss1
@@ -19,7 +18,7 @@ classification_loss:
 margin:
     - 0.2
 num_epochs_in_step: 1
-num_epoch_steps: 5
+num_epoch_steps: 30
 batch:
     - 10/40
 track_metric:

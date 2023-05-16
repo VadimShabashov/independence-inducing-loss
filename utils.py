@@ -44,7 +44,7 @@ def get_regularization_loss(regularization_loss, device):
 
 def get_whitening(whitening, device, embedding_dim):
     if whitening == 'ZCA1':
-        return ZCA1(device=device, num_features=embedding_dim)
+        return ZCA1(device=device, num_features=embedding_dim, affine=False)
     elif whitening == 'ZCA2':
         return ZCA2(device=device, num_features=embedding_dim, num_groups=1, T=5, dim=2, affine=False)
     else:
