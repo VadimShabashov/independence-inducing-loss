@@ -31,6 +31,7 @@ The experiments descriptions are presented below:
    11. Return L2, compare embedding dimension and batch size.
    12. Add whitening to the final embeddings.
    13. Compare whitenings, when applying them to the final embeddings.
+   14. Decrease independence loss constant; compare batch size and whether to use classification loss or not.
 4. Comparison of the best models on different datasets.
    1. Best models without independence loss (with and without regularization).
    2. Best models with KurtosisLoss or CorrMatLoss.

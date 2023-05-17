@@ -1,4 +1,4 @@
-# Decrease independence loss constant; compare batch size and whether to use classification loss or not.
+# Compare two whitenings
 dataset:
     - CIFAR10
 model:
@@ -8,6 +8,7 @@ embedding_dim:
 num_unfrozen_layers:
     - 1
 whitening:
+    - ZCA1
     - ZCA2
 independence_loss:
     - NegApproxLoss1
@@ -15,15 +16,12 @@ regularization_loss:
     - null
 classification_loss:
     - Enable
-    - Disable
 margin:
     - 0.2
 num_epochs_in_step: 1
-num_epoch_steps: 50
+num_epoch_steps: 5
 batch:
     - 10/40
-    - 10/10
-    - 5/5
 track_metric:
     - P@1
     - P@3
