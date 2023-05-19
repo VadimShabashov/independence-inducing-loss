@@ -2,9 +2,9 @@
 dataset:
     - CIFAR10
     - Oxford5k
+    - GoogleLandmarks
 model:
     - ResNet18
-    - ViT
 embedding_dim:
     - 1024
 num_unfrozen_layers:

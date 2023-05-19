@@ -42,26 +42,30 @@ def main(experiment_path):
         # Get info about number of epochs
         num_epochs_in_step = config['num_epochs_in_step']
         num_epoch_steps = config['num_epoch_steps']
+    except:
+        logging.exception('Caught an exception during parsing')
+        return
 
+    # For tracking metrics and saving to csv in the end
+    tracking_results = []
+    fields = [
+        'Dataset', 'Emb. dim', 'Reg. loss', 'Class. loss', 'Batch',
+        'Margin', 'Model', 'Trained Layers', 'Whitening', 'Ind. loss', 'Epochs',
+        *track_metrics
+    ]
+
+    # For histograms visualization
+    experiments = []
+
+    try:
         # Get device (GPU if it's available)
         device = 'cuda' if torch.cuda.is_available() else 'cpu'
         logger.info(f"Using device='{device}'")
 
-        # For tracking metrics and saving to csv in the end
-        tracking_results = []
-        fields = [
-            'Dataset', 'Emb. dim', 'Reg. loss', 'Class. loss', 'Batch',
-            'Margin', 'Model', 'Trained Layers', 'Whitening', 'Ind. loss', 'Epochs',
-            *track_metrics
-        ]
-
         # For tracking the number of left experiments
         overall_number_experiments = get_number_experiments(config)
         number_passed_experiments = 0
-
-        # For histograms visualization
-        experiments = []
-
+        
         for dataset_name in config['dataset']:
             for batch in config['batch']:
 
@@ -175,22 +179,24 @@ def main(experiment_path):
                                                             )
                                                         )
 
-        # Save mean metrics results
-        csv_results_path = os.path.join(experiment_path, 'results.csv')
-        with open(csv_results_path, 'w') as csv_results_file:
-            # Get writer
-            write = csv.writer(csv_results_file, quoting=csv.QUOTE_NONNUMERIC)
-
-            # Write fields and results
-            write.writerow(fields)
-            write.writerows(tracking_results)
-
-        # Show histograms for metrics
-        if plot_hist_metrics:
-            plot_metric_histograms(experiment_path, experiments, plot_hist_metrics)
-
     except:
         logging.exception('Caught an exception in main')
+
+    finally:
+        if tracking_results:
+            # Save mean metrics results
+            csv_results_path = os.path.join(experiment_path, 'results.csv')
+            with open(csv_results_path, 'w') as csv_results_file:
+                # Get writer
+                write = csv.writer(csv_results_file, quoting=csv.QUOTE_NONNUMERIC)
+
+                # Write fields and results
+                write.writerow(fields)
+                write.writerows(tracking_results)
+
+            # Save histograms for metrics
+            if plot_hist_metrics:
+                plot_metric_histograms(experiment_path, experiments, plot_hist_metrics)
 
 
 if __name__ == '__main__':
