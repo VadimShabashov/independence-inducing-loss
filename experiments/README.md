@@ -33,6 +33,6 @@ The experiments descriptions are presented below:
    13. Compare whitenings, when applying them to the final embeddings.
    14. Decrease independence loss constant; compare batch size and whether to use classification loss or not.
 4. Comparison of the best models on different datasets.
-   1. Best models without independence loss (with and without regularization).
-   2. Best models with KurtosisLoss or CorrMatLoss.
-   3. Best models with NegApproxLoss1 or NegApproxLoss2.
+   1. Best models with decorrelation loss or no loss at all.
+   2. Best models with kurtosis or negentropy losses.
+   3. ...

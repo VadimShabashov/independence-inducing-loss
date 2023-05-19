@@ -1,19 +1,19 @@
-# Final experiment for models with negentropy or kurtosis losses
+# Final experiment for models with decorrelation loss or no loss at all
 dataset:
     - CIFAR10
     - Oxford5k
+    - GoogleLandmarks
 model:
     - ResNet18
 embedding_dim:
     - 1024
 num_unfrozen_layers:
-    - 1
+    - All
 whitening:
-    - ZCA2
+    - Disable
 independence_loss:
-    - NegApproxLoss1
-    - NegApproxLoss2
-    - KurtosisLoss
+    - null
+    - CorrMatLoss
 regularization_loss:
     - null
 classification_loss:
@@ -21,9 +21,9 @@ classification_loss:
 margin:
     - 0.2
 num_epochs_in_step: 1
-num_epoch_steps: 20
+num_epoch_steps: 10
 batch:
-    - 10/40
+    - 10/10
 track_metric:
     - P@1
     - P@3
