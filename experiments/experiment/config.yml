@@ -1,9 +1,10 @@
-# Final experiment for ViT with independence loss
+# Final experiment for ViT and AlexNet with independence loss
 dataset:
     - CIFAR10
     - Oxford5k
 model:
-    - ResNet18
+    - AlexNet
+    - ViT
 embedding_dim:
     - 1024
 num_unfrozen_layers:
