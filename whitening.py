@@ -47,8 +47,8 @@ class ZCA1(nn.Module):
         self.momentum = momentum
         self.affine = affine
         self.groups = groups
-        self.weight = Parameter(torch.zeros(num_features, 1, device=self.device))
-        self.bias = Parameter(torch.zeros(num_features, 1, device=self.device))
+        self.weight = Parameter(torch.Tensor(num_features, 1)).to(device=self.device)
+        self.bias = Parameter(torch.Tensor(num_features, 1)).to(device=self.device)
         self.power_layer = self.PowerIterationOnce.apply
         self.register_buffer('running_mean', torch.zeros(num_features, 1, device=self.device))
         self.create_dictionary()
@@ -134,7 +134,10 @@ class ZCA1(nn.Module):
                 self.running_mean = (1 - self.momentum) * self.running_mean + self.momentum * mu
 
             xr = torch.cat(xgr_list, dim=0)
-            xr = xr * self.weight + self.bias
+
+            if self.affine:
+                xr = xr * self.weight + self.bias
+
             xr = xr.view(C, N, H, W).transpose(0, 1)
 
             # Get 2D from 4D
@@ -152,7 +155,10 @@ class ZCA1(nn.Module):
                 subspace = self.__getattr__('running_subspace' + str(i))
                 xg[i] = torch.mm(subspace, xg[i])
             x = torch.cat(xg, dim=0)
-            x = x * self.weight + self.bias
+
+            if self.affine:
+                x = x * self.weight + self.bias
+
             x = x.view(C, N, H, W).transpose(0, 1)
 
             # Get 2D from 4D
@@ -278,8 +284,8 @@ class ZCA2(torch.nn.Module):
         shape[1] = self.num_features
 
         if self.affine:
-            self.weight = Parameter(torch.zeros(*shape, device=self.device))
-            self.bias = Parameter(torch.zeros(*shape, device=self.device))
+            self.weight = Parameter(torch.Tensor(*shape)).to(device=self.device)
+            self.bias = Parameter(torch.Tensor(*shape)).to(device=self.device)
         else:
             self.register_parameter('weight', None)
             self.register_parameter('bias', None)

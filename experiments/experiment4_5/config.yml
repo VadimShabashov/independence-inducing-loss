@@ -1,7 +1,6 @@
 # Final experiment for models with negentropy or kurtosis losses (but no whitening)
 dataset:
     - CIFAR10
-    - Oxford5k
 model:
     - ResNet18
 embedding_dim:
