@@ -1,4 +1,4 @@
-# Final experiment for ViT with independence loss
+# Final experiment for models with negentropy or kurtosis losses
 dataset:
     - CIFAR10
     - Oxford5k
@@ -21,7 +21,7 @@ classification_loss:
 margin:
     - 0.2
 num_epochs_in_step: 1
-num_epoch_steps: 3
+num_epoch_steps: 20
 batch:
     - 10/40
 track_metric:

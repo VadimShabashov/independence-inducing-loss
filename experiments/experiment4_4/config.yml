@@ -1,4 +1,4 @@
-# Final experiment for ViT with independence loss
+# Final experiment for model with regularization loss (constant = 10.0)
 dataset:
     - CIFAR10
     - Oxford5k
@@ -7,23 +7,21 @@ model:
 embedding_dim:
     - 1024
 num_unfrozen_layers:
-    - 1
+    - All
 whitening:
-    - ZCA2
+    - Disable
 independence_loss:
-    - NegApproxLoss1
-    - NegApproxLoss2
-    - KurtosisLoss
-regularization_loss:
     - null
+regularization_loss:
+    - L1
 classification_loss:
     - Enable
 margin:
     - 0.2
 num_epochs_in_step: 1
-num_epoch_steps: 3
+num_epoch_steps: 10
 batch:
-    - 10/40
+    - 10/10
 track_metric:
     - P@1
     - P@3

@@ -3,4 +3,4 @@ class L1:
         self.alpha = alpha
 
     def __call__(self, x):
-        return self.alpha * x.abs().sum()
+        return self.alpha * x.abs().mean()

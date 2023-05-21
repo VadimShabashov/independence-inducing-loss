@@ -45,7 +45,7 @@ class NegApproxLoss2(BaseIndependenceLoss):
     Minimization of mutual information <=> maximization of negentropy <=> minimization of 1/negentropy
     """
 
-    def __init__(self, device, alpha=10.0, eps=1e-8):
+    def __init__(self, device, alpha=1.0, eps=1e-8):
         super().__init__(device, alpha, eps)
 
     def __call__(self, x):

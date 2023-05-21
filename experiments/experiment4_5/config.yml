@@ -1,4 +1,4 @@
-# Final experiment for ViT with independence loss
+# Final experiment for models with negentropy or kurtosis losses (but no whitening)
 dataset:
     - CIFAR10
     - Oxford5k
@@ -7,9 +7,9 @@ model:
 embedding_dim:
     - 1024
 num_unfrozen_layers:
-    - 1
+    - All
 whitening:
-    - ZCA2
+    - Disable
 independence_loss:
     - NegApproxLoss1
     - NegApproxLoss2
@@ -21,7 +21,7 @@ classification_loss:
 margin:
     - 0.2
 num_epochs_in_step: 1
-num_epoch_steps: 3
+num_epoch_steps: 20
 batch:
     - 10/40
 track_metric:
