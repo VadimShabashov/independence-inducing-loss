@@ -1,0 +1,11 @@
+21-05-2023 13:19:29 $ Using device='cuda'
+21-05-2023 13:19:36 $ Experiment 1/2
+Model with configuration: dataset=CIFAR10, model=ResNet18, embedding_dim=1024, whitening=ZCA1, num_unfrozen_layers=1, ind. loss=NegApproxLoss1, reg. loss=None, class. loss=Enable, batch=10/40, margin=0.2, num_epochs_in_step=1, num_epoch_steps=3
+21-05-2023 13:44:14 $ loss = 2.64, ranking_loss = 0.20, regularization_loss = 0.00, independence_loss = 0.14, classification_loss = 2.30, accuracy = 0.10
+21-05-2023 14:10:45 $ loss = 2.64, ranking_loss = 0.20, regularization_loss = 0.00, independence_loss = 0.14, classification_loss = 2.30, accuracy = 0.10
+21-05-2023 14:37:19 $ loss = 2.64, ranking_loss = 0.20, regularization_loss = 0.00, independence_loss = 0.14, classification_loss = 2.30, accuracy = 0.10
+21-05-2023 14:39:01 $ Experiment 2/2
+Model with configuration: dataset=CIFAR10, model=ResNet18, embedding_dim=1024, whitening=ZCA2, num_unfrozen_layers=1, ind. loss=NegApproxLoss1, reg. loss=None, class. loss=Enable, batch=10/40, margin=0.2, num_epochs_in_step=1, num_epoch_steps=3
+21-05-2023 14:40:34 $ loss = 4.20, ranking_loss = 1.92, regularization_loss = 0.00, independence_loss = 0.22, classification_loss = 2.05, accuracy = 0.60
+21-05-2023 14:43:49 $ loss = 3.62, ranking_loss = 1.75, regularization_loss = 0.00, independence_loss = 0.22, classification_loss = 1.65, accuracy = 0.77
+21-05-2023 14:47:04 $ loss = 3.29, ranking_loss = 1.68, regularization_loss = 0.00, independence_loss = 0.22, classification_loss = 1.38, accuracy = 0.78
