@@ -3,8 +3,8 @@ dataset:
     - CIFAR10
     - Oxford5k
 model:
-    - AlexNet
     - ViT
+    - AlexNet
 embedding_dim:
     - 1024
 num_unfrozen_layers:
