@@ -73,10 +73,10 @@ def plot_metric_histograms(experiment_path, experiments, metrics):
 
 
 @click.command()
-@click.option('--experiment_path', help='Path to the folder with experiments results')
-def visualize_results(experiment_path):
+@click.option('--exp_path', help='Path to the folder with experiments results')
+def visualize_results(exp_path):
     # Get path to the csv file with results
-    csv_results_path = os.path.join(experiment_path, 'results.csv')
+    csv_results_path = os.path.join(exp_path, 'results.csv')
 
     # Create table csv file visualization
     results_table = PrettyTable()

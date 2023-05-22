@@ -18,9 +18,9 @@ class MetricsStorage:
                 self.metrics['Sparsity'] = torch.cat(
                     (self.calculate_sparsity(database_embeddings), self.calculate_sparsity(query_embeddings))
                 )
-            elif metric == 'Independence':
-                self.metrics['Independence'] = 0.5 * (
-                    self.calculate_independence(database_embeddings) + self.calculate_independence(query_embeddings)
+            elif metric == 'Correlation':
+                self.metrics['Correlation'] = 0.5 * (
+                    self.calculate_correlation(database_embeddings) + self.calculate_correlation(query_embeddings)
                 )
             elif p_at_k_pattern.match(metric) or metric == 'MAP':
                 ranking_metrics.append(metric)
@@ -34,10 +34,10 @@ class MetricsStorage:
 
     @staticmethod
     def calculate_sparsity(embeddings):
-        return (embeddings < 1e-8).to(torch.float32).mean(dim=1)
+        return (embeddings.abs() < 1e-8).to(torch.float32).mean(dim=1)
 
     @staticmethod
-    def calculate_independence(embeddings):
+    def calculate_correlation(embeddings):
         return non_diagonal_correlation(embeddings)
 
     def calculate_ranking_metrics(self, database_embeddings, database_labels, query_embeddings, query_labels, ranking_metrics):

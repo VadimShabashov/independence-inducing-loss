@@ -33,7 +33,7 @@ Description of the parameters:
 | num_epochs_in_step  |                                Number epochs between checking metrics.                                 |                        positive integer                         |         10         |     True     |
 |   num_epoch_steps   |                                Number of steps (times) to check metrics                                |                        positive integer                         |         5          |     True     |
 |        batch        | Two integers for batch sample: number of classes to select, number of samples for each of the classes. |        Pair of two positive integers, separated with '/'        |        5/5         |     True     |
-|    track_metric     |                               Metrics to track and save in the csv file.                               |                P@k, MAP, Independence, Sparsity                 |        P@1         |     True     |
+|    track_metric     |                               Metrics to track and save in the csv file.                               |                 P@k, MAP, Correlation, Sparsity                 |        P@1         |     True     |
 |  plot_hist_metric   |                                    Metrics to plot histograms for.                                     |                          P@k, Sparsity                          |        P@1         |    False     |
 
 Note: for some parameters several values can be set. In that case platform will run experiment for each of the
@@ -77,7 +77,7 @@ track_metric:
     - P@5
     - P@10
     - MAP
-    - Independence
+    - Correlation
     - Sparsity
 plot_hist_metric:
     - P@1
@@ -133,21 +133,21 @@ plot_hist_metric:
 4. Specify the experiment configuration in `config.yml`
 5. Start platform with the command:
    ```
-   python3 main.py --experiment_path=<path to the config.yml>
+   python3 main.py --exp_path=<path to the config.yml>
    ```
 
    Example:
    ```
-   python3 main.py --experiment_path=experiments/experiment1
+   python3 main.py --exp_path=experiments/exp1
    ```
-6. The results will be saved in the `experiment_path` near the `config.yml` file.
+6. The results will be saved in the `exp_path` near the `config.yml` file.
 
    * Results for `track_metrics` are saved in the `results.csv`.
    * Histograms for `plot_hist_metric` are saved in the `histograms.png`.
 
 7. Optional. For convenient visualization of `track_metrics`, one can run the following script:
    ```
-   python3 visualization --experiment_path=<path to the config.yml>
+   python3 visualization --exp_path=<path to the config.yml>
    ```
 
    The script reads the `results.csv` file and prints it as table to the output.

@@ -18,10 +18,10 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 
 @click.command()
-@click.option('--experiment_path', help='Path to the folder with experiment config')
-def main(experiment_path):
+@click.option('--exp_path', help='Path to the folder with experiment config')
+def main(exp_path):
     # Path to the log file, where training status is saved
-    log_path = os.path.join(experiment_path, 'experiment.log')
+    log_path = os.path.join(exp_path, 'experiment.log')
 
     # Create logger
     logging.basicConfig(
@@ -32,7 +32,7 @@ def main(experiment_path):
 
     try:
         # Get experiments parameters
-        config = parse_config(experiment_path)
+        config = parse_config(exp_path)
 
         # Get metrics to track, metrics to visualize on histogram and their union
         track_metrics = config['track_metric']
@@ -185,7 +185,7 @@ def main(experiment_path):
     finally:
         if tracking_results:
             # Save mean metrics results
-            csv_results_path = os.path.join(experiment_path, 'results.csv')
+            csv_results_path = os.path.join(exp_path, 'results.csv')
             with open(csv_results_path, 'w') as csv_results_file:
                 # Get writer
                 write = csv.writer(csv_results_file, quoting=csv.QUOTE_NONNUMERIC)
@@ -196,7 +196,7 @@ def main(experiment_path):
 
             # Save histograms for metrics
             if plot_hist_metrics:
-                plot_metric_histograms(experiment_path, experiments, plot_hist_metrics)
+                plot_metric_histograms(exp_path, experiments, plot_hist_metrics)
 
 
 if __name__ == '__main__':

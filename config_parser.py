@@ -8,7 +8,7 @@ def validate_metrics(metrics):
     p_at_k_pattern = re.compile("P@[1-9][0-9]*$")
     unknown_metrics = []
     for metric in metrics:
-        if metric != 'Independence' and metric != 'Sparsity' and metric != 'MAP' and not p_at_k_pattern.match(metric):
+        if metric != 'Correlation' and metric != 'Sparsity' and metric != 'MAP' and not p_at_k_pattern.match(metric):
             unknown_metrics.append(metric)
 
     if unknown_metrics:
