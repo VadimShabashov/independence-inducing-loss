@@ -3,36 +3,26 @@
 The goal of the project is to compare performance of independent losses. 
 
 Initially, the platform was designed for taking each possible configuration of params from `config.yml` file.
-However, it turns out, that there are too many experiments to test, and they take too much time to complete.
+However, it turns out, that there are too many experiments to run, and they take too much time to complete.
 So, another approach has to be done.
 
 The sequence of experiments in this folder is an attempt to estimate each of the parameters separately. It's not ideal, since
 they might behave in a different way when changing together. But it seems like a reasonable approximation.
 
 The experiments descriptions are presented below:
-1. Testing part.
-   1. Check that everything is working.
-   2. Check that everything is working.
-2. Best parameters for model without independence loss.
-   1. Find the best batch size for each model.
-   2. Find whether classification loss should be used or not.
-   3. Find the best number of unfrozen layers.
-3. Best parameters for model with independence loss.
-   1. Run independence losses without whitening for all layers.
-   2. Increase constant for independence loss.
-   3. Increase batch size.
-   4. Add whitening.
-   5. Check best number of unfrozen layers.
-   6. Find best batch size.
-   7. Compare whitening techniques.
-   8. Decrease constant for independence loss.
-   9. Remove whitening, unfreeze single layer.
-   10. Increase constant for independence loss and remove L2.
-   11. Return L2, compare embedding dimension and batch size.
-   12. Add whitening to the final embeddings.
-   13. Compare whitenings, when applying them to the final embeddings.
-   14. Decrease independence loss constant; compare batch size and whether to use classification loss or not.
-4. Comparison of the best models on different datasets.
-   1. Best models with decorrelation loss or no loss at all.
-   2. Best models with kurtosis or negentropy losses.
-   3. ...
+* No additional losses.
+   1. Find best batch size for a model without additional losses.
+   2. Check whether to use classification loss or not for a model without additional losses.
+   3. Find best number of layers to train for a model without additional losses.
+* With independence loss.
+   4. Find best batch size for a model with independence loss.
+   5. Check whether to use classification loss or not for a model with independence losses.
+   6. Find best whitening for a model with independence loss.
+* Results.
+   7. Results for models with decorrelation loss and no loss at all.
+   8. Results for models with independence losses.
+   9. Results for models with regularization loss.
+* Checking few ideas.
+   10. Checking large embedding dimension for a model with independence loss.
+   11. Check models with no additional losses on a single layer.
+   12. Checking a model with independence loss on all layers and no whitening.

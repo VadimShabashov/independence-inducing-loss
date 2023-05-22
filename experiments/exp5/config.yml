@@ -1,4 +1,4 @@
-# Compare whitenings
+# Check whether to use classification loss or not for a model with independence loss.
 dataset:
     - CIFAR10
 model:
@@ -8,7 +8,6 @@ embedding_dim:
 num_unfrozen_layers:
     - 1
 whitening:
-    - ZCA1
     - ZCA2
 independence_loss:
     - NegApproxLoss1
@@ -16,6 +15,7 @@ regularization_loss:
     - null
 classification_loss:
     - Enable
+    - Disable
 margin:
     - 0.2
 num_epochs_in_step: 1
@@ -28,5 +28,5 @@ track_metric:
     - P@5
     - P@10
     - MAP
-    - Independence
+    - Correlation
     - Sparsity

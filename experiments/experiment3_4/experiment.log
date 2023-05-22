@@ -1,6 +1,0 @@
-07-05-2023 16:01:04 $ Using device='cuda'
-07-05-2023 16:01:04 $ Experiment 1/1
-Model with configuration: dataset=CIFAR10, model=ResNet18, embedding_dim=1024, whitening=ZCA, num_unfrozen_layers=1, ind. loss=NegApproxLoss1, reg. loss=None, class. loss=Enable, batch=10/40, margin=0.2, num_epochs_in_step=1, num_epoch_steps=3
-07-05-2023 17:38:08 $ loss = 4.53, ranking_loss = 0.28, regularization_loss = 0.00, independence_loss = 1.95, classification_loss = 2.30, accuracy = 0.18
-07-05-2023 19:20:51 $ loss = 4.15, ranking_loss = 0.22, regularization_loss = 0.00, independence_loss = 1.63, classification_loss = 2.30, accuracy = 0.66
-07-05-2023 21:03:59 $ loss = 4.02, ranking_loss = 0.21, regularization_loss = 0.00, independence_loss = 1.51, classification_loss = 2.30, accuracy = 0.72

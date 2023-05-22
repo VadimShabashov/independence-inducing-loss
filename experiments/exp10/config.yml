@@ -1,16 +1,16 @@
-# Find best batch size for a model without additional losses
+# Checking large embedding dimension for a model with independence loss.
 dataset:
     - CIFAR10
 model:
     - ResNet18
 embedding_dim:
-    - 1024
+    - 10000
 num_unfrozen_layers:
-    - All
+    - 1
 whitening:
-    - Disable
+    - ZCA2
 independence_loss:
-    - null
+    - NegApproxLoss1
 regularization_loss:
     - null
 classification_loss:
@@ -20,9 +20,7 @@ margin:
 num_epochs_in_step: 1
 num_epoch_steps: 3
 batch:
-    - 5/5
-    - 10/5
-    - 10/10
+    - 10/40
 track_metric:
     - P@1
     - P@3

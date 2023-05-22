@@ -1,4 +1,4 @@
-# Decrease independence loss constant; compare batch size and whether to use classification loss or not.
+# Find best batch size for a model with independence loss.
 dataset:
     - CIFAR10
 model:
@@ -15,11 +15,10 @@ regularization_loss:
     - null
 classification_loss:
     - Enable
-    - Disable
 margin:
     - 0.2
 num_epochs_in_step: 1
-num_epoch_steps: 50
+num_epoch_steps: 3
 batch:
     - 10/40
     - 10/10
@@ -30,5 +29,5 @@ track_metric:
     - P@5
     - P@10
     - MAP
-    - Independence
+    - Correlation
     - Sparsity

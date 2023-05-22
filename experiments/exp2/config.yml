@@ -1,4 +1,4 @@
-# Estimate how models perform with/without classification loss
+# Check whether to use classification loss or not for a model without additional losses.
 dataset:
     - CIFAR10
 model:
@@ -18,7 +18,7 @@ classification_loss:
     - Enable
 margin:
     - 0.2
-num_epochs_in_step: 5
+num_epochs_in_step: 1
 num_epoch_steps: 3
 batch:
     - 10/10
@@ -28,5 +28,5 @@ track_metric:
     - P@5
     - P@10
     - MAP
-    - Independence
+    - Correlation
     - Sparsity

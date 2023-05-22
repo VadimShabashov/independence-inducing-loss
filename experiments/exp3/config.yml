@@ -1,4 +1,4 @@
-# Find the best number of unfrozen layers for model without independence loss
+# Find best number of layers to train for a model without additional losses.
 dataset:
     - CIFAR10
 model:
@@ -19,8 +19,8 @@ classification_loss:
     - Enable
 margin:
     - 0.2
-num_epochs_in_step: 3
-num_epoch_steps: 2
+num_epochs_in_step: 1
+num_epoch_steps: 3
 batch:
     - 10/10
 track_metric:
@@ -29,5 +29,5 @@ track_metric:
     - P@5
     - P@10
     - MAP
-    - Independence
+    - Correlation
     - Sparsity

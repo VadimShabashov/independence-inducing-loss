@@ -1,4 +1,4 @@
-# Find best batch size for a model without additional losses
+# Checking a model with independence loss on all layers and no whitening.
 dataset:
     - CIFAR10
 model:
@@ -10,7 +10,7 @@ num_unfrozen_layers:
 whitening:
     - Disable
 independence_loss:
-    - null
+    - NegApproxLoss1
 regularization_loss:
     - null
 classification_loss:
@@ -18,16 +18,14 @@ classification_loss:
 margin:
     - 0.2
 num_epochs_in_step: 1
-num_epoch_steps: 3
+num_epoch_steps: 5
 batch:
-    - 5/5
-    - 10/5
-    - 10/10
+    - 10/40
 track_metric:
     - P@1
     - P@3
     - P@5
     - P@10
     - MAP
-    - Correlation
+    - Independence
     - Sparsity

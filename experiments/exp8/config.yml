@@ -1,16 +1,21 @@
-# Find best batch size for a model without additional losses
+# Results for models with independence losses.
 dataset:
     - CIFAR10
+    - Oxford5k
 model:
+    - AlexNet
     - ResNet18
+    - ViT
 embedding_dim:
     - 1024
 num_unfrozen_layers:
-    - All
+    - 1
 whitening:
-    - Disable
+    - ZCA2
 independence_loss:
-    - null
+    - NegApproxLoss1
+    - NegApproxLoss2
+    - KurtosisLoss
 regularization_loss:
     - null
 classification_loss:
@@ -18,11 +23,9 @@ classification_loss:
 margin:
     - 0.2
 num_epochs_in_step: 1
-num_epoch_steps: 3
+num_epoch_steps: 5
 batch:
-    - 5/5
-    - 10/5
-    - 10/10
+    - 10/40
 track_metric:
     - P@1
     - P@3
