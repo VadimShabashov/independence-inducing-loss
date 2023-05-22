@@ -82,7 +82,6 @@ track_metric:
 plot_hist_metric:
     - P@1
     - P@10
-    - Independence
     - Sparsity
 ```
 
