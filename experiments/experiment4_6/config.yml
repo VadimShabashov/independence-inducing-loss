@@ -1,0 +1,31 @@
+# Final experiment for models with negentropy or kurtosis losses (but no whitening)
+dataset:
+    - CIFAR10
+model:
+    - ResNet18
+embedding_dim:
+    - 1024
+num_unfrozen_layers:
+    - 1
+whitening:
+    - Disable
+independence_loss:
+    - null
+regularization_loss:
+    - null
+classification_loss:
+    - Enable
+margin:
+    - 0.2
+num_epochs_in_step: 1
+num_epoch_steps: 10
+batch:
+    - 10/10
+track_metric:
+    - P@1
+    - P@3
+    - P@5
+    - P@10
+    - MAP
+    - Independence
+    - Sparsity
