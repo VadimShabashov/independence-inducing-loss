@@ -24,7 +24,7 @@ margin:
 num_epochs_in_step: 1
 num_epoch_steps: 3
 batch:
-    - 10/40
+    - 10/30
 track_metric:
     - P@1
     - P@3
