@@ -11,34 +11,19 @@ they might behave in a different way when changing together. But it seems like a
 
 The experiments descriptions are presented below.
 
+<ul>
+<li>bar</li>
+<ol start="10">
+<li>foo</li>
+<li>foo</li>
+</ol>
+</ul>
+
 No additional losses.
 1. Find best batch size for a model without additional losses.
 2. Check whether to use classification loss or not for a model without additional losses.
 3. Find best number of layers to train for a model without additional losses.
 * With independence loss.
-
-<ol start="10">
-<li>foo</li>
-</ol>
-<ul>
-<li>bar</li>
-</ul>
-
-  <ol start="10">
-  <li>foo</li>
-  </ol>
-  <ul>
-  <li>bar</li>
-  </ul>
-
-<ul>
-<li>bar</li>
-<ol start="10">
-<li>foo</li>
-</ol>
-</ul>
-
-  {:start="3"}
   1. Find best batch size for a model with independence loss.
   2. Check whether to use classification loss or not for a model with independence losses.
   3. Find best whitening for a model with independence loss.
