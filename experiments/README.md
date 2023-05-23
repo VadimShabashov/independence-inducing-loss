@@ -9,12 +9,20 @@ So, another approach has to be done.
 The sequence of experiments in this folder is an attempt to estimate each of the parameters separately. It's not ideal, since
 they might behave in a different way when changing together. But it seems like a reasonable approximation.
 
-The experiments descriptions are presented below:
-* No additional losses.
-  1. Find best batch size for a model without additional losses.
-  2. Check whether to use classification loss or not for a model without additional losses.
-  3. Find best number of layers to train for a model without additional losses.
+The experiments descriptions are presented below.
+
+No additional losses.
+1. Find best batch size for a model without additional losses.
+2. Check whether to use classification loss or not for a model without additional losses.
+3. Find best number of layers to train for a model without additional losses.
 * With independence loss.
+
+<ol start="10">
+<li>foo</li>
+</ol>
+<ul>
+<li>bar</li>
+</ul>
 
   {:start="3"}
   1. Find best batch size for a model with independence loss.
