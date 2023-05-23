@@ -15,17 +15,19 @@ The experiments descriptions are presented below:
   2. Check whether to use classification loss or not for a model without additional losses.
   3. Find best number of layers to train for a model without additional losses.
 * With independence loss.
+
   {:start="3"}
   1. Find best batch size for a model with independence loss.
   2. Check whether to use classification loss or not for a model with independence losses.
   3. Find best whitening for a model with independence loss.
 * Results.
-  {:start="7"}
+{:start="7"}
   1. Results for models with decorrelation loss and no loss at all.
   2. Results for models with independence losses.
   3. Results for models with regularization loss.
 * Checking few ideas.
-  {:start="10"}
+
+{:start="10"}
   1. Checking large embedding dimension for a model with independence loss.
   2. Check models with no additional losses on a single layer.
   3. Checking a model with independence loss on all layers and no whitening.
