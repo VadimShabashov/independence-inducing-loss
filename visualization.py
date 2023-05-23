@@ -96,7 +96,7 @@ def visualize_results(exp_path):
 
     # Show results table with metrics up to 2nd digit
     print("Results table:")
-    results_table.float_format = '.2'
+    results_table.float_format = '.3'
     print(results_table)
 
 
