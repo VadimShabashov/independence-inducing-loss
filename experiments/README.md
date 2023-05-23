@@ -24,6 +24,20 @@ No additional losses.
 <li>bar</li>
 </ul>
 
+  <ol start="10">
+  <li>foo</li>
+  </ol>
+  <ul>
+  <li>bar</li>
+  </ul>
+
+<ul>
+<li>bar</li>
+<ol start="10">
+<li>foo</li>
+</ol>
+</ul>
+
   {:start="3"}
   1. Find best batch size for a model with independence loss.
   2. Check whether to use classification loss or not for a model with independence losses.
