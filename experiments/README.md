@@ -9,32 +9,30 @@ So, another approach has to be done.
 The sequence of experiments in this folder is an attempt to estimate each of the parameters separately. It's not ideal, since
 they might behave in a different way when changing together. But it seems like a reasonable approximation.
 
-The experiments descriptions are presented below.
-
+The experiments descriptions are presented below:
 <ul>
-<li>bar</li>
+<li>No additional losses.</li>
+<ol>
+<li>Find best batch size for a model without additional losses.</li>
+<li>Check whether to use classification loss or not for a model without additional losses.</li>
+<li>Find best number of layers to train for a model without additional losses.</li>
+</ol>
+<li>With independence loss.</li>
+<ol start="4">
+<li>Find best batch size for a model with independence loss.</li>
+<li>Check whether to use classification loss or not for a model with independence losses.</li>
+<li>Find best whitening for a model with independence loss.</li>
+</ol>
+<li>Results.</li>
+<ol start="7">
+<li>Results for models with decorrelation loss and no loss at all.</li>
+<li>Results for models with independence losses.</li>
+<li>Results for models with regularization loss.</li>
+</ol>
+<li>Checking few ideas.</li>
 <ol start="10">
-<li>foo</li>
-<li>foo</li>
+<li>Checking large embedding dimension for a model with independence loss.</li>
+<li>Check models with no additional losses on a single layer.</li>
+<li>Checking a model with independence loss on all layers and no whitening.</li>
 </ol>
 </ul>
-
-No additional losses.
-1. Find best batch size for a model without additional losses.
-2. Check whether to use classification loss or not for a model without additional losses.
-3. Find best number of layers to train for a model without additional losses.
-* With independence loss.
-  1. Find best batch size for a model with independence loss.
-  2. Check whether to use classification loss or not for a model with independence losses.
-  3. Find best whitening for a model with independence loss.
-* Results.
-{:start="7"}
-  1. Results for models with decorrelation loss and no loss at all.
-  2. Results for models with independence losses.
-  3. Results for models with regularization loss.
-* Checking few ideas.
-
-{:start="10"}
-  1. Checking large embedding dimension for a model with independence loss.
-  2. Check models with no additional losses on a single layer.
-  3. Checking a model with independence loss on all layers and no whitening.
