@@ -18,10 +18,10 @@ classification_loss:
     - Disable
 margin:
     - 0.2
-num_epochs_in_step: 1
+num_epochs_in_step: 2
 num_epoch_steps: 3
 batch:
-    - 10/40
+    - 10/10
 track_metric:
     - P@1
     - P@3

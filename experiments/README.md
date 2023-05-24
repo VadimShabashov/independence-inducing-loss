@@ -33,6 +33,6 @@ The experiments descriptions are presented below:
 <ol start="10">
 <li>Checking large embedding dimension for a model with independence loss.</li>
 <li>Check models with no additional losses on a single layer.</li>
-<li>Checking a model with independence loss on all layers and no whitening.</li>
+<li>Checking a model with independence loss with different combinations of number of layers and whitening.</li>
 </ol>
 </ul>

@@ -1,0 +1,33 @@
+24-05-2023 16:48:19 $ Using device='cuda'
+24-05-2023 16:48:21 $ Experiment 1/4
+Model with configuration: dataset=CIFAR10, model=ResNet18, embedding_dim=1024, whitening=Disable, num_unfrozen_layers=1, ind. loss=NegApproxLoss1, reg. loss=None, class. loss=Enable, batch=10/10, margin=0.2, num_epochs_in_step=2, num_epoch_steps=3
+24-05-2023 16:49:08 $ loss = 3.96, ranking_loss = 0.27, regularization_loss = 0.00, independence_loss = 1.49, classification_loss = 2.19, accuracy = 0.66
+24-05-2023 16:49:51 $ loss = 3.30, ranking_loss = 0.43, regularization_loss = 0.00, independence_loss = 1.51, classification_loss = 1.36, accuracy = 0.79
+24-05-2023 16:51:22 $ loss = 2.94, ranking_loss = 0.45, regularization_loss = 0.00, independence_loss = 1.51, classification_loss = 0.98, accuracy = 0.81
+24-05-2023 16:52:06 $ loss = 2.76, ranking_loss = 0.45, regularization_loss = 0.00, independence_loss = 1.51, classification_loss = 0.80, accuracy = 0.81
+24-05-2023 16:53:37 $ loss = 2.65, ranking_loss = 0.44, regularization_loss = 0.00, independence_loss = 1.51, classification_loss = 0.70, accuracy = 0.82
+24-05-2023 16:54:21 $ loss = 2.58, ranking_loss = 0.43, regularization_loss = 0.00, independence_loss = 1.51, classification_loss = 0.65, accuracy = 0.82
+24-05-2023 16:55:08 $ Experiment 2/4
+Model with configuration: dataset=CIFAR10, model=ResNet18, embedding_dim=1024, whitening=ZCA2, num_unfrozen_layers=1, ind. loss=NegApproxLoss1, reg. loss=None, class. loss=Enable, batch=10/10, margin=0.2, num_epochs_in_step=2, num_epoch_steps=3
+24-05-2023 16:55:55 $ loss = 4.96, ranking_loss = 1.14, regularization_loss = 0.00, independence_loss = 2.12, classification_loss = 1.69, accuracy = 0.72
+24-05-2023 16:56:41 $ loss = 4.13, ranking_loss = 1.07, regularization_loss = 0.00, independence_loss = 2.04, classification_loss = 1.02, accuracy = 0.80
+24-05-2023 16:58:14 $ loss = 3.76, ranking_loss = 1.05, regularization_loss = 0.00, independence_loss = 1.96, classification_loss = 0.76, accuracy = 0.81
+24-05-2023 16:59:01 $ loss = 3.57, ranking_loss = 1.02, regularization_loss = 0.00, independence_loss = 1.90, classification_loss = 0.65, accuracy = 0.82
+24-05-2023 17:00:38 $ loss = 3.44, ranking_loss = 1.00, regularization_loss = 0.00, independence_loss = 1.86, classification_loss = 0.59, accuracy = 0.83
+24-05-2023 17:01:24 $ loss = 3.37, ranking_loss = 0.98, regularization_loss = 0.00, independence_loss = 1.83, classification_loss = 0.56, accuracy = 0.83
+24-05-2023 17:02:13 $ Experiment 3/4
+Model with configuration: dataset=CIFAR10, model=ResNet18, embedding_dim=1024, whitening=Disable, num_unfrozen_layers=All, ind. loss=NegApproxLoss1, reg. loss=None, class. loss=Enable, batch=10/10, margin=0.2, num_epochs_in_step=2, num_epoch_steps=3
+24-05-2023 17:03:39 $ loss = 3.36, ranking_loss = 0.26, regularization_loss = 0.00, independence_loss = 1.50, classification_loss = 1.60, accuracy = 0.86
+24-05-2023 17:05:07 $ loss = 2.26, ranking_loss = 0.16, regularization_loss = 0.00, independence_loss = 1.50, classification_loss = 0.60, accuracy = 0.96
+24-05-2023 17:07:24 $ loss = 1.85, ranking_loss = 0.10, regularization_loss = 0.00, independence_loss = 1.49, classification_loss = 0.25, accuracy = 0.98
+24-05-2023 17:08:51 $ loss = 1.70, ranking_loss = 0.08, regularization_loss = 0.00, independence_loss = 1.49, classification_loss = 0.13, accuracy = 0.98
+24-05-2023 17:11:08 $ loss = 1.63, ranking_loss = 0.06, regularization_loss = 0.00, independence_loss = 1.49, classification_loss = 0.08, accuracy = 0.99
+24-05-2023 17:12:34 $ loss = 1.59, ranking_loss = 0.05, regularization_loss = 0.00, independence_loss = 1.49, classification_loss = 0.06, accuracy = 0.99
+24-05-2023 17:13:23 $ Experiment 4/4
+Model with configuration: dataset=CIFAR10, model=ResNet18, embedding_dim=1024, whitening=ZCA2, num_unfrozen_layers=All, ind. loss=NegApproxLoss1, reg. loss=None, class. loss=Enable, batch=10/10, margin=0.2, num_epochs_in_step=2, num_epoch_steps=3
+24-05-2023 17:14:58 $ loss = 3.57, ranking_loss = 0.63, regularization_loss = 0.00, independence_loss = 1.83, classification_loss = 1.12, accuracy = 0.89
+24-05-2023 17:16:33 $ loss = 2.30, ranking_loss = 0.30, regularization_loss = 0.00, independence_loss = 1.72, classification_loss = 0.28, accuracy = 0.97
+24-05-2023 17:18:56 $ loss = 2.00, ranking_loss = 0.20, regularization_loss = 0.00, independence_loss = 1.69, classification_loss = 0.12, accuracy = 0.98
+24-05-2023 17:20:31 $ loss = 1.86, ranking_loss = 0.14, regularization_loss = 0.00, independence_loss = 1.65, classification_loss = 0.08, accuracy = 0.98
+24-05-2023 17:22:56 $ loss = 1.77, ranking_loss = 0.11, regularization_loss = 0.00, independence_loss = 1.61, classification_loss = 0.06, accuracy = 0.99
+24-05-2023 17:24:31 $ loss = 1.70, ranking_loss = 0.08, regularization_loss = 0.00, independence_loss = 1.58, classification_loss = 0.05, accuracy = 0.99
